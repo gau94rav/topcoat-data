@@ -1,0 +1,93 @@
+<template>
+  <div @mouseleave="showMenu = false" class="bg-filterBackgroundColor">
+    <div
+      @click="showMenu=!showMenu"
+      class="relative flex items-center justify-between py-2 pl-3 pr-9 cursor-pointer border border-filterBorderColor focus:outline-none"
+      :class="{'border-b-0': showMenu}"
+    >
+      <div class="tracking-wide bg-filterBackgroundColor text-sm font-normal">
+        {{ metadata.title }}
+      </div>
+      <div class="right-3 absolute text-sm">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+    <div
+      v-if="showMenu"
+      class="min-w-full w-max absolute border-filterBorderColor box-border bg-filterBackgroundColor border z-10"
+      :class="{'border-t-0': !showMenu}"
+    >
+      <button
+        type="button"
+        class="list-content bg-filterBackgroundColor hover:bg-filterHighlightColor hover:text-primaryFontColor flex items-center px-3 py-2 w-full"
+        v-for="item, index in options"
+        :key="index"
+        @click="selectItem(index)"
+      >
+        <div class="menu-label">
+          <i
+            v-if="options[index] == selected_internal"
+            class="mr-1 fa-check-square far"
+          ></i>
+          <i v-else class="mr-1 fa-square far"></i>
+          {{ labels[index] }}
+        </div>
+      </button>
+    </div>
+  </div>
+</template>
+​
+<script>
+  export default {
+    data() {
+      return {
+        showMenu: false,
+        selected_internal: null,
+        is_filter: true,
+      };
+    },
+    computed: {
+      selected_label: {
+        get() {
+          for (var i = 0; i < this.options.length; i++) {
+            if (this.options[i] == this.selected_internal) {
+              return this.labels[i];
+            }
+          }
+          return null;
+        },
+      },
+      options() {
+        const column_name = this.findColumnByTag("options");
+        if (column_name) return this.getColumn(column_name);
+      },
+      labels() {
+        const column_name = this.findColumnByTag("labels");
+        if (column_name) return this.getColumn(column_name);
+      },
+    },
+    methods: {
+      selectItem(index) {
+        this.selected_internal = this.options[index];
+        this.setFilterValue("dropdown", this.selected_internal, true);
+        this.showMenu = false;
+      },
+      onVisualizationInit() {
+        // See if the page was loaded with a url param value
+        const initial_value = this.getFilterValue("dropdown");
+        const option_column = this.findColumnByTag("options");
+        const label_column = this.findColumnByTag("labels");
+        if (initial_value) {
+          this.selected_internal = initial_value;
+        } else if (this.config.default_value) {
+          this.selected_internal = this.config.default_value;
+        } else if (this.options.length) {
+          this.selected_internal = this.options[0];
+        } else {
+          return;
+        }
+        this.setFilterValue("dropdown", this.selected_internal, true);
+      },
+    },
+  };
+</script>

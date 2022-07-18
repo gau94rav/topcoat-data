@@ -1,0 +1,109 @@
+
+project:
+    name: My Project
+    #logo:
+        #path: <add logo filename here>
+        #width: 150
+
+modules:
+    - git: https://github.com/topcoat-data/topcoat-public.git
+      revision: main
+
+#connections:
+    # Configure your connection details here then add secret to Admin/Secrets
+
+    #- name: bigquery
+    #  type: bigquery
+    #  dataset: mydataset
+    #  dbt: false
+
+    #- name: postgres
+    #  type: postgres
+    #  host: <host address>
+    #  database: <db name>
+    #  port: 5432
+    #  username: <username>
+    #  schema: <schema>
+    #  dbt: false
+
+    #- name: snowflake
+    #  type: snowflake
+    #  account: <account>.<region>
+    #  username: <username>
+    #  warehouse: <warehouse>
+    #  database: <database>
+    #  schema: <schema>
+    #  dbt: false
+
+layers:
+  personas: [ 'default' ]
+  connection: snowflake
+
+  ncaa:
+    connection: tcbq
+  
+  sample:
+    connection: tcbq
+
+personas:
+    default:
+
+        - url: issues-detail
+          src: issues_detail.html
+          title: Issues Detail
+          icon_class: fa-chart-bar
+
+        # - url: executive_summary
+        #   src: executive_summary.html
+        #   title: Executive Summary
+        #   icon_class: fa-chart-bar
+
+        # - url: report-executive-summary
+        #   src: report_executive_summary.html
+        #   title: Rpt Executive Summary
+        #   icon_class: fa-chart-bar
+          
+        # - url: summary2
+        #   src: summary2.html
+        #   title: Summary
+        #   icon_class: fa-chart-bar
+
+        # - url: component
+        #   src: component.vue
+        #   title: Component
+        #   icon_class: fa-chart-bar
+
+        # - url: expand
+        #   src: expand.vue
+        #   title: Expand
+        #   icon_class: fa-chart-bar
+
+        # - url: issues
+        #   src: issues.vue
+        #   title: Issues
+        #   icon_class: fa-chart-bar
+
+        # - url: issue_detail_pdf
+        #   src: issue_detail_pdf.vue
+        #   title: Issue Detail PDF
+        #   icon_class: fa-chart-bar
+
+        # - url: issue_detail_pdf_v2
+        #   src: issue_detail_pdf_v2.vue
+        #   title: PDF V2
+        #   icon_class: fa-chart-bar
+
+
+
+develop:
+  defaults:
+    attributes:
+      snyk_user_reports_org_ids:
+        - '4c62f811-1816-4896-a91d-22577bb8eaca'
+      snyk_user_reports_group_ids:
+        - '5ea22317-e879-4eb9-8ef7-411dc7c3a604'
+    filters:
+      team_name: '49ers'
+      season: '2015'
+      year: '2020'
+      orgs: '4c62f811-1816-4896-a91d-22577bb8eaca'

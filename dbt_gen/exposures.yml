@@ -1,0 +1,736 @@
+version: 2
+
+exposures:
+
+  - name: activity_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/activity
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('activity')
+
+  - name: all_product_numbers_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/all_product_numbers
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('all_product_numbers')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: all_severity_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/all_severity_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('all_severity_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: closed_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/closed_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('closed_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: code_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/code_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('code_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: code_vuln_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/code_vuln_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('code_vuln_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: component
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('activity')
+      - ref('newtest')
+
+  - name: configuration_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/configuration_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('configuration_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: container_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/container_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('container_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: critical_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/critical_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('critical_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: distinct_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/distinct_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('distinct_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: executive_summary
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('all_severity_issues')
+      - ref('filter_calendar')
+      - ref('filter_cve')
+      - ref('filter_cwe')
+      - ref('filter_group')
+      - ref('filter_orgs')
+      - ref('filter_tags')
+      - ref('issue_table')
+      - ref('m_filter_autofixable')
+      - ref('m_filter_exploit_maturity')
+      - ref('m_filter_ignored')
+      - ref('m_filter_issue_severity')
+      - ref('m_filter_issue_type')
+      - ref('m_filter_product_name')
+      - ref('m_filter_project_criticality')
+      - ref('m_filter_project_environment')
+      - ref('m_filter_project_lifecycle')
+      - ref('m_filter_project_name')
+      - ref('m_filter_project_type')
+      - ref('m_filter_reachability')
+      - ref('m_filter_status')
+      - ref('selected_group')
+
+  - name: expand
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+
+  - name: filter_autofixable_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_autofixable
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_autofixable')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: filter_calendar_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_calendar
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_calendar')
+
+  - name: filter_cve_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_cve
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_cve')
+
+  - name: filter_cwe_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_cwe
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_cwe')
+
+  - name: filter_group_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_group
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_group')
+
+  - name: filter_ignored_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_ignored
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_ignored')
+
+  - name: filter_issue_severity_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_issue_severity
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_issue_severity')
+
+  - name: filter_issue_type_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_issue_type
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_issue_type')
+
+  - name: filter_layer_type_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_layer_type
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_layer_type')
+
+  - name: filter_orgs_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_orgs
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_orgs')
+
+  - name: filter_product_name_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_product_name
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_product_name')
+
+  - name: filter_project_criticality_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_project_criticality
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_project_criticality')
+
+  - name: filter_project_environment_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_project_environment
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_project_environment')
+
+  - name: filter_project_lifecycle_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_project_lifecycle
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_project_lifecycle')
+
+  - name: filter_project_name_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_project_name
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_project_name')
+
+  - name: filter_project_owner_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_project_owner
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_project_owner')
+
+  - name: filter_project_type_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_project_type
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_project_type')
+
+  - name: filter_reachability_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_reachability
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_reachability')
+
+  - name: filter_status_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_status
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_status')
+
+  - name: filter_tags_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_tags
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_tags')
+
+  - name: high_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/high_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('high_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: high_license_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/high_license
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('high_license')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: iac_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/iac_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('iac_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: issue_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/issue
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('issue')
+
+  - name: issue_detail_pdf
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('issue_table')
+
+  - name: issue_detail_pdf_v2
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('issue_table')
+
+  - name: issue_table_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/issue_table
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('issue_table')
+
+  - name: issues
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('product_layer')
+      - ref('table_group_by')
+
+  - name: issues_detail
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app/issues-detail
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('all_severity_issues')
+      - ref('filter_calendar')
+      - ref('filter_cve')
+      - ref('filter_cwe')
+      - ref('filter_layer_type')
+      - ref('filter_orgs')
+      - ref('filter_tags')
+      - ref('issue_table')
+      - ref('m_filter_autofixable')
+      - ref('m_filter_exploit_maturity')
+      - ref('m_filter_ignored')
+      - ref('m_filter_issue_severity')
+      - ref('m_filter_issue_type')
+      - ref('m_filter_product_name')
+      - ref('m_filter_project_criticality')
+      - ref('m_filter_project_environment')
+      - ref('m_filter_project_lifecycle')
+      - ref('m_filter_project_name')
+      - ref('m_filter_project_type')
+      - ref('m_filter_reachability')
+      - ref('m_filter_status')
+      - ref('selected_group')
+
+  - name: key_value_layer_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/key_value_layer
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('key_value_layer')
+
+  - name: license_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/license_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('license_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: low_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/low_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('low_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: low_license_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/low_license
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('low_license')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: m_filter_autofixable_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_autofixable
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_autofixable')
+
+  - name: m_filter_exploit_maturity_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_exploit_maturity
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_exploit_maturity')
+
+  - name: m_filter_ignored_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_ignored
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_ignored')
+
+  - name: m_filter_issue_severity_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_issue_severity
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_issue_severity')
+
+  - name: m_filter_issue_type_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_issue_type
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_issue_type')
+
+  - name: m_filter_product_name_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_product_name
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_product_name')
+
+  - name: m_filter_project_criticality_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_criticality
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_project_criticality')
+
+  - name: m_filter_project_environment_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_environment
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_project_environment')
+
+  - name: m_filter_project_lifecycle_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_lifecycle
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_project_lifecycle')
+
+  - name: m_filter_project_name_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_name
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_project_name')
+
+  - name: m_filter_project_type_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_type
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_project_type')
+
+  - name: m_filter_reachability_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_reachability
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_reachability')
+
+  - name: m_filter_status_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_status
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_status')
+
+  - name: medium_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/medium_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('medium_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: medium_license_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/medium_license
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('medium_license')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: new_test_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/new_test
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('new_test')
+
+  - name: newtest_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/newtest
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('newtest')
+
+  - name: open_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/open_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('open_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: open_source_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/open_source_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('open_source_issues')
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: product_layer_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/product_layer
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('product_layer')
+
+  - name: report_executive_summary
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_calendar')
+      - ref('filter_cve')
+      - ref('filter_cwe')
+      - ref('filter_orgs')
+      - ref('filter_tags')
+      - ref('m_filter_autofixable')
+      - ref('m_filter_exploit_maturity')
+      - ref('m_filter_ignored')
+      - ref('m_filter_issue_severity')
+      - ref('m_filter_issue_type')
+      - ref('m_filter_product_name')
+      - ref('m_filter_project_criticality')
+      - ref('m_filter_project_environment')
+      - ref('m_filter_project_lifecycle')
+      - ref('m_filter_project_name')
+      - ref('m_filter_project_type')
+      - ref('m_filter_reachability')
+      - ref('m_filter_status')
+
+  - name: reports_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/reports
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('reports')
+
+  - name: search_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/search
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('search')
+
+  - name: seed_filtered_ungrouped_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/seed_filtered_ungrouped_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_filtered_ungrouped_issues')
+
+  - name: seed_grouped_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/seed_grouped_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_grouped_issues')
+
+  - name: seed_projects_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/seed_projects
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_projects')
+
+  - name: seed_ungrouped_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/seed_ungrouped_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_ungrouped_issues')
+
+  - name: selected_group_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/selected_group
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_filtered_ungrouped_issues')
+      - ref('selected_group')
+
+  - name: selected_org_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/selected_org
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_filtered_ungrouped_issues')
+      - ref('selected_org')
+
+  - name: summary2
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('all_severity_issues')
+      - ref('distinct_issues')
+      - ref('filter_group')
+      - ref('filter_orgs')
+      - ref('filter_reachability')
+      - ref('filter_tags')
+      - ref('issue_table')
+      - ref('m_filter_ignored')
+      - ref('m_filter_issue_severity')
+      - ref('m_filter_issue_type')
+      - ref('m_filter_product_name')
+      - ref('m_filter_project_criticality')
+      - ref('m_filter_project_environment')
+      - ref('m_filter_project_lifecycle')
+      - ref('m_filter_project_name')
+      - ref('m_filter_project_type')
+      - ref('m_filter_status')
+      - ref('total_issues')
+
+  - name: table_group_by_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/table_group_by
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('table_group_by')
+
+  - name: total_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/total_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_filtered_ungrouped_issues')
+      - ref('total_issues')
+
+  - name: value_filter_layer_type_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/value_filter_layer_type
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('value_filter_layer_type')
+
+  - name: vuln_issues_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/vuln_issues
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('seed_filtered_ungrouped_issues')
+      - ref('vuln_issues')
+

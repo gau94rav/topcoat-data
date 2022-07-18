@@ -1,0 +1,46 @@
+<template>
+  <div :class="{ 'tile': true, 'border': true, 'border-tileBorderColor': true, 'bg-tileBackgroundColor': true, 'col-span-2': full_width }">
+    <div class="tile-header h-14 flex items-center p-4 border-b border-tileBorderColor bg-pageBackgroundColor">
+      <div class="text-lg font-semibold">{{ title }}</div>
+      <div class="tooltip text-violet mx-2">
+          <i class="fas fa-question-circle"></i>
+      </div>
+    </div>
+    <div :class="{ 'tile-content': true, 'bg-pageBackgroundColor': !shade_background, 'bg-tileBackgroundColor': shade_background, 'p-4': true }">
+        <div class="content-block">
+          <div v-if="block">
+            <slot></slot>
+          </div>
+          <div v-else class="flex flex-wrap gap-4 justify-between">
+            <slot></slot>
+          </div>
+        </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+    props: {
+        title: {
+            type: String
+        },
+        show_tooltip: {
+            type: Boolean,
+            default: false
+        },
+        shade_background: {
+            type: Boolean,
+            default: false
+        },
+        block: {
+            type: Boolean,
+            default: false
+        },
+        full_width: {
+            type: Boolean,
+            default: false
+        }
+    }
+}
+</script>

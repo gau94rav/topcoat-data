@@ -1,0 +1,96 @@
+<template>
+  <div class="content-block" style="color: rgba(0, 0, 0, 0.65);">
+    <div>
+      <div class="flex items-center">
+        <p class="text-sm text-uppercase text-extralight">{{ title }}</p>
+        <div v-if="show_tooltip" class="tooltip text-violet mx-2">
+            <i class="fas fa-question-circle"></i>
+        </div>
+      </div>
+      <div style="height: 90px; width: 50px;" v-if="loading">
+        <Spinner />
+      </div>
+      <div v-else>
+        <div class="mt-5 mb-4">
+          <a v-if="is_link" :class="['text-4xl', 'text-semibold', 'border-b-2', borders[severity], 'big-number', colors[severity] ]">{{ rows[0].VALUE.rendered }}</a>
+          <span v-else :class="['text-4xl', 'text-semibold', 'big-number', colors[severity] ]">{{ rows[0].VALUE.rendered }}</span>
+        </div>
+        <p v-if="rows[0].comparison != null" class="text-sm text-violet text-light">{{ rows[0].COMPARISON.rendered }} {{ secondary_text }}</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+    data:()=>({
+      is_filter: true,
+      colors: {
+                'critical': 'text-red',
+                'high': 'text-orange',
+                'medium': 'text-yellow',
+                'low': 'text-grey'
+            },
+       borders: {
+                'critical': 'border-red',
+                'high': 'border-orange',
+                'medium': 'border-yellow',
+                'low': 'border-grey'
+            }
+    }),
+    props: {
+        title: {
+            type: String
+        },
+        is_link: {
+            type: Boolean,
+            default: true
+        },
+        show_tooltip: {
+            type: Boolean,
+            default: false
+        },
+        secondary_text: {
+            type: String,
+            default: 'auto fixable'
+        },
+        severity: { 
+            type: String,
+            default: 'low'
+        }
+    }
+}
+</script>
+
+<style>
+  .text-red {
+    color: #ba1515;
+  }
+  .border-red {
+    border-color: #ba1515; 
+  }
+  .text-orange {
+    color: #ee6f30;
+  }
+  .border-orange {
+    border-color: #ee6f30;
+  }
+  .text-yellow {
+    color: #f9a11b;
+  }
+  .border-yellow {
+    border-color: #f9a11b;
+  }
+  .text-grey {
+    color: #8e8d92;
+  }
+  .border-grey {
+    border-color: #8e8d92;
+  }
+  .text-violet {
+    color: #451da2;
+  }
+  .spinner-loader svg {
+    fill: black !important;
+  }
+</style>

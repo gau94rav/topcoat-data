@@ -1,0 +1,31 @@
+<template>
+    <theme>
+        <t-input 
+            placeholder="Text"
+            size="small"
+            t-layer="activity"
+            label="Input"
+            slot="filters"
+        />
+        <t-multiple-value-input
+            label="Input"
+            slot="filters"
+            t-layer="newtest"
+            size="small"
+        />
+        <t-checkbox-switch 
+            slot="filters"
+            t-layer="newtest"
+        />
+        <t-calendar-picker
+            slot="filters"
+            t-layer="newtest"
+            label="Input"
+        />
+        <t-csv-export
+            slot="filters"
+            t-layer="newtest"
+            label="Input"
+        />
+    </theme>
+</template>

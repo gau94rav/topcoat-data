@@ -1,0 +1,113 @@
+<template>
+  <div @mouseleave="showMenu = false" class="bg-filterBackgroundColor">
+    <div
+      @click="showMenu = !showMenu"
+      class="relative flex items-center justify-between py-2 pl-3 pr-9 cursor-pointer border border-filterBorderColor focus:outline-none"
+      :class="{'border-b-0': showMenu}"
+    >
+      <div class="tracking-wide bg-filterBackgroundColor text-sm font-normal">
+        {{ metadata.title }}
+      </div>
+      <div class="right-3 absolute text-sm">
+        <i class="fas fa-chevron-down"></i>
+      </div>
+    </div>
+    <div
+      v-if="showMenu"
+      class="min-w-full w-max absolute border-filterBorderColor box-border bg-filterBackgroundColor border z-10"
+      :class="{'border-t-0': !showMenu}"
+    >
+      <button
+        type="button"
+        class="list-content bg-filterBackgroundColor hover:bg-filterHighlightColor hover:text-primaryFontColor flex items-center px-3 py-2 w-full"
+        v-for="(item, index) in items"
+        :key="index"
+        @click="selectItem({ item, index })"
+      >
+        <div class="menu-label">
+          <i
+            v-if="urlIds && urlIds.includes(item.id)"
+            class="mr-1 fa-check-square far"
+          ></i>
+          <i v-else class="mr-1 fa-square far"></i>
+          {{ item.label }}
+        </div>
+      </button>
+    </div>
+  </div>
+</template>
+​
+<script>
+  export default {
+    data() {
+      return {
+        is_filter: true,
+        items: [],
+        selected: [],
+        showMenu: false,
+        urlIds: [],
+      };
+    },
+    methods: {
+      onVisualizationInit() {
+        // Get initial values
+        const initial_value = this.getFilterValue("selected_items");
+        let urlParams = "";
+        this.getItems();
+        if (initial_value) {
+          this.findItems(initial_value);
+          urlParams = initial_value;
+        } else if (this.config.default_value) {
+          this.findItems(this.config.default_value);
+          urlParams = this.config.default_value;
+        } else {
+          // Found nothing, keep url param empty.
+          return this.unsetFilterValue("selected_items", true);
+        }
+        this.urlIds = urlParams.split("|");
+        this.setFilterValue("selected_items", urlParams, true);
+      },
+      getItems() {
+        // Get columns by tags
+        const idColumn = this.findColumnByTag("ids");
+        const labelColumn = this.findColumnByTag("names");
+        // Get value of column
+        const ids = this.getColumn(idColumn);
+        const labels = this.getColumn(labelColumn);
+        // Assign items to items array
+        const items = [];
+        if (ids && labels) {
+          for (let index in ids) {
+            const id = ids[index];
+            const label = labels[index];
+            items.push({ id, label });
+          }
+        }
+        this.items = items;
+      },
+      selectItem({ item, index = null }) {
+        // Update selected items
+        const isChecked =
+          this.selected.filter((s) => s.id === item.id).length === 0;
+        if (isChecked) {
+          this.selected.push(item);
+        } else {
+          this.selected = this.selected.filter(
+            (selectedItem) => selectedItem.id !== item.id
+          );
+        }
+        // Update url param
+        const urlParams = this.selected.map((item) => item.id).join("|");
+        this.urlIds = urlParams.split("|");
+        if (urlParams) {
+          return this.setFilterValue("selected_items", urlParams, true);
+        }
+        return this.unsetFilterValue("selected_items", true);
+      },
+      findItems(urlParams) {
+        const ids = urlParams.split("|");
+        this.selected = this.items.filter((item) => ids.includes(item.id));
+      },
+    },
+  };
+</script>

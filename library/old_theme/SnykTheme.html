@@ -1,0 +1,108 @@
+<template>
+  <div class="bg-pageBackgroundColor">
+    <SnykHeader />
+    
+    <div class="p-8 filter-block lg:flex md:flex items-center justify-between bg-pageSectionColor">
+      <div class="lg:flex flex-wrap md:flex gap-4">
+        <slot name="filters_tl"></slot>
+      </div>
+      <div>
+        <slot name="filters_tr"></slot>
+      </div>
+    </div>
+    
+    <!-- Tabs Start -->
+    <div class="bg-pageSectionColor mb-5">
+      <ul class="pl-8 nav nav-tabs inline-flex w-full border-b border-filterBorderColor" id="infoTab" role="tablist">
+        <li class="nav-item" role="presentation" v-for="page in project.nav">
+          <button @click="location.href=page.url;" :class="navSelected(page.url, 'nav-link active px-4 py-2 bg-filterBackgroundColor focus:outline-none border-top-2 border-b-0 border border-filterBorderColor', 'nav-link px-4 py-2 focus:outline-none')">
+            {{ page.title }}
+          </button>
+        </li>
+      </ul>
+      <div class="tab-content px-8 bg-pageBackgroundColor" id="infoTabContent">
+        <div class="tab-pane fade show active" id="one" role="tabpanel" aria-labelledby="one-tab">
+          <div class="flex py-6">
+            <slot name="filters" />
+          </div>
+          <div class="grid lg:grid-cols-2 gap-4 mb-4">
+            <slot></slot>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Tabs End --> 
+    
+    <p class="px-8 pb-5 text-italic"><i>There may be a delay of up to 9 hours from the time a project is tested until that data appears in Reports</i></p>
+  </div>
+</template>
+
+<style>
+  :root {
+    --primary-color: #652ba4;
+    --primary-border-color: #ffffff;
+    --primary-font-color: #ffffff;
+    --secondary-color: #451da2;
+    --secondary-font-color: #652ba4;
+    --page-section-color: #f5f9fc;
+    --page-background-color: #ffffff;
+    --filter-border-color: #ced2d5;
+    --filter-menu-color: #ffffff;
+    --filter-highlight-color: #451da2;
+    --filter-background-color: #ffffff;
+    --tile-border-color: #ced2d5;
+    --tile-background-color: #f8f8f8;
+  }
+  .bg-red {
+    background-color: #b71715;
+  }
+  .text-red {
+    color: #ba1515;
+  }
+  .border-red {
+    border-color: #ba1515; 
+  }
+  .text-orange {
+    color: #ee6f30;
+  }
+  .border-orange {
+    border-color: #ee6f30;
+  }
+  .text-yellow {
+    color: #f9a11b;
+  }
+  .border-yellow {
+    border-color: #f9a11b;
+  }
+  .text-grey {
+    color: #8e8d92;
+  }
+  .border-grey {
+    border-color: #8e8d92;
+  }
+  .text-violet {
+    color: #451da2;
+  }
+  .vr-divider {
+    width: 1px;
+  }
+  .overview-btn {
+    background-color: #f9f1e6;
+    border-color: #bf9e2e;
+    color: #bf9e2e;
+  }
+  .main-nav li a.active {
+    border-bottom: 2px solid #ffffff;
+  }
+  .nav-link.active {
+    border-top: 3px solid #504c7f;
+  }
+</style>
+
+<script>
+  export default {
+    data:()=>({
+      summaryFilter:false
+    })
+  }
+</script>

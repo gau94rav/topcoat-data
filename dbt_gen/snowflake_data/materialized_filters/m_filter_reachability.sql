@@ -1,0 +1,6 @@
+select REACHABILITY
+
+from "SANDBOX"."TC_TEST"."REACHABILITY"
+
+
+ 
