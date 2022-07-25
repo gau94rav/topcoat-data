@@ -52,6 +52,12 @@ personas:
           src: issues_detail.html
           title: Issues Detail
           icon_class: fa-chart-bar
+          pdf_template: issues_pdf
+
+        # - url: issues-detail-pdf
+        #   src: issues_pdf.vue
+        #   title: Issues Detail
+        #   icon_class: fa-chart-bar
 
         # - url: executive_summary
         #   src: executive_summary.html

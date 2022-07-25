@@ -1,5 +1,5 @@
 <template>
-	<report class="max-w-[1440px] relative left-0 right-0 m-auto">
+	<report-sample class="max-w-[1440px] relative left-0 right-0 m-auto">
 
 		<!-- Filters Left Start -->
 		<t-container slot="filters" gap-x="2">
@@ -13,7 +13,7 @@
 			<t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs"
 				label="Organizations" />
 
-			<t-multi-selector t-layer="m_filter_product_name" t-filter:selected_items="product_name" label="Products" />
+			<t-multi-v t-layer="m_filter_product_name" t-filter:selected_items="product_name" label="Products" />
 
 			<t-filter-group label="More Filters" max-height="400px">
 				<t-calendar-picker
@@ -24,7 +24,7 @@
                     picker-mode="range"
                     item-label="Last Introduced"
                 />
-				<t-multi-selector is-expanded t-layer="m_filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" />
+				<t-multi-v is-expanded t-layer="m_filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" />
                 <t-multi-selector is-expanded t-layer="m_filter_issue_severity" t-filter:selected_items="issue_severity" item-label="Issue Severity" />
                 <t-multi-selector is-expanded t-layer="m_filter_project_type" t-filter:selected_items="project_type" item-label="Project Type" />
                 <t-multi-selector is-expanded t-layer="m_filter_reachability" t-filter:selected_items="reachability" item-label="Reachability" />
@@ -88,7 +88,7 @@
 
 		<!-- Filters Right Start -->
 		<t-container slot="filters" gap-x="2">
-			<t-pdf />
+			<t-pdf-export />
 		</t-container>
 		<!-- Filters Right End -->
 
@@ -185,5 +185,5 @@
 		</TTable>
 		<!-- Layers End -->
 
-	</report>
+	</report-sample>
 </template>

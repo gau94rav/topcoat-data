@@ -4,7 +4,7 @@ exposures:
 
   - name: activity_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/activity
+    url: https://gaurav.topcoatdev.net//layers/activity
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -12,7 +12,7 @@ exposures:
 
   - name: all_product_numbers_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/all_product_numbers
+    url: https://gaurav.topcoatdev.net//layers/all_product_numbers
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -21,7 +21,7 @@ exposures:
 
   - name: all_severity_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/all_severity_issues
+    url: https://gaurav.topcoatdev.net//layers/all_severity_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -30,7 +30,7 @@ exposures:
 
   - name: closed_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/closed_issues
+    url: https://gaurav.topcoatdev.net//layers/closed_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -39,7 +39,7 @@ exposures:
 
   - name: code_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/code_issues
+    url: https://gaurav.topcoatdev.net//layers/code_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -48,7 +48,7 @@ exposures:
 
   - name: code_vuln_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/code_vuln_issues
+    url: https://gaurav.topcoatdev.net//layers/code_vuln_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -65,7 +65,7 @@ exposures:
 
   - name: configuration_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/configuration_issues
+    url: https://gaurav.topcoatdev.net//layers/configuration_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -74,7 +74,7 @@ exposures:
 
   - name: container_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/container_issues
+    url: https://gaurav.topcoatdev.net//layers/container_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -83,7 +83,7 @@ exposures:
 
   - name: critical_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/critical_issues
+    url: https://gaurav.topcoatdev.net//layers/critical_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -92,7 +92,7 @@ exposures:
 
   - name: distinct_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/distinct_issues
+    url: https://gaurav.topcoatdev.net//layers/distinct_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -134,7 +134,7 @@ exposures:
 
   - name: filter_autofixable_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_autofixable
+    url: https://gaurav.topcoatdev.net//layers/filter_autofixable
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -143,7 +143,7 @@ exposures:
 
   - name: filter_calendar_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_calendar
+    url: https://gaurav.topcoatdev.net//layers/filter_calendar
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -151,7 +151,7 @@ exposures:
 
   - name: filter_cve_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_cve
+    url: https://gaurav.topcoatdev.net//layers/filter_cve
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -159,7 +159,7 @@ exposures:
 
   - name: filter_cwe_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_cwe
+    url: https://gaurav.topcoatdev.net//layers/filter_cwe
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -167,7 +167,7 @@ exposures:
 
   - name: filter_group_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_group
+    url: https://gaurav.topcoatdev.net//layers/filter_group
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -175,7 +175,7 @@ exposures:
 
   - name: filter_ignored_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_ignored
+    url: https://gaurav.topcoatdev.net//layers/filter_ignored
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -183,7 +183,7 @@ exposures:
 
   - name: filter_issue_severity_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_issue_severity
+    url: https://gaurav.topcoatdev.net//layers/filter_issue_severity
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -191,7 +191,7 @@ exposures:
 
   - name: filter_issue_type_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_issue_type
+    url: https://gaurav.topcoatdev.net//layers/filter_issue_type
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -199,7 +199,7 @@ exposures:
 
   - name: filter_layer_type_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_layer_type
+    url: https://gaurav.topcoatdev.net//layers/filter_layer_type
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -207,7 +207,7 @@ exposures:
 
   - name: filter_orgs_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_orgs
+    url: https://gaurav.topcoatdev.net//layers/filter_orgs
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -215,7 +215,7 @@ exposures:
 
   - name: filter_product_name_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_product_name
+    url: https://gaurav.topcoatdev.net//layers/filter_product_name
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -223,7 +223,7 @@ exposures:
 
   - name: filter_project_criticality_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_project_criticality
+    url: https://gaurav.topcoatdev.net//layers/filter_project_criticality
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -231,7 +231,7 @@ exposures:
 
   - name: filter_project_environment_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_project_environment
+    url: https://gaurav.topcoatdev.net//layers/filter_project_environment
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -239,7 +239,7 @@ exposures:
 
   - name: filter_project_lifecycle_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_project_lifecycle
+    url: https://gaurav.topcoatdev.net//layers/filter_project_lifecycle
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -247,7 +247,7 @@ exposures:
 
   - name: filter_project_name_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_project_name
+    url: https://gaurav.topcoatdev.net//layers/filter_project_name
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -255,7 +255,7 @@ exposures:
 
   - name: filter_project_owner_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_project_owner
+    url: https://gaurav.topcoatdev.net//layers/filter_project_owner
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -263,7 +263,7 @@ exposures:
 
   - name: filter_project_type_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_project_type
+    url: https://gaurav.topcoatdev.net//layers/filter_project_type
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -271,7 +271,7 @@ exposures:
 
   - name: filter_reachability_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_reachability
+    url: https://gaurav.topcoatdev.net//layers/filter_reachability
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -279,7 +279,7 @@ exposures:
 
   - name: filter_status_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_status
+    url: https://gaurav.topcoatdev.net//layers/filter_status
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -287,7 +287,7 @@ exposures:
 
   - name: filter_tags_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/filter_tags
+    url: https://gaurav.topcoatdev.net//layers/filter_tags
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -295,7 +295,7 @@ exposures:
 
   - name: high_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/high_issues
+    url: https://gaurav.topcoatdev.net//layers/high_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -304,7 +304,7 @@ exposures:
 
   - name: high_license_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/high_license
+    url: https://gaurav.topcoatdev.net//layers/high_license
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -313,7 +313,7 @@ exposures:
 
   - name: iac_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/iac_issues
+    url: https://gaurav.topcoatdev.net//layers/iac_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -322,7 +322,7 @@ exposures:
 
   - name: issue_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/issue
+    url: https://gaurav.topcoatdev.net//layers/issue
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -344,7 +344,7 @@ exposures:
 
   - name: issue_table_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/issue_table
+    url: https://gaurav.topcoatdev.net//layers/issue_table
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -360,7 +360,7 @@ exposures:
 
   - name: issues_detail
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app/issues-detail
+    url: https://gaurav.topcoatdev.net/issues-detail
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -387,9 +387,30 @@ exposures:
       - ref('m_filter_status')
       - ref('selected_group')
 
+  - name: issues_pdf
+    type: 'dashboard'
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('all_severity_issues')
+      - ref('filter_group')
+      - ref('filter_layer_type')
+      - ref('filter_orgs')
+      - ref('issue_table')
+      - ref('m_filter_autofixable')
+      - ref('m_filter_exploit_maturity')
+      - ref('m_filter_ignored')
+      - ref('m_filter_issue_severity')
+      - ref('m_filter_issue_type')
+      - ref('m_filter_product_name')
+      - ref('m_filter_project_name')
+      - ref('m_filter_project_type')
+      - ref('m_filter_reachability')
+      - ref('m_filter_status')
+
   - name: key_value_layer_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/key_value_layer
+    url: https://gaurav.topcoatdev.net//layers/key_value_layer
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -397,7 +418,7 @@ exposures:
 
   - name: license_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/license_issues
+    url: https://gaurav.topcoatdev.net//layers/license_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -406,7 +427,7 @@ exposures:
 
   - name: low_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/low_issues
+    url: https://gaurav.topcoatdev.net//layers/low_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -415,7 +436,7 @@ exposures:
 
   - name: low_license_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/low_license
+    url: https://gaurav.topcoatdev.net//layers/low_license
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -424,7 +445,7 @@ exposures:
 
   - name: m_filter_autofixable_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_autofixable
+    url: https://gaurav.topcoatdev.net//layers/m_filter_autofixable
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -432,7 +453,7 @@ exposures:
 
   - name: m_filter_exploit_maturity_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_exploit_maturity
+    url: https://gaurav.topcoatdev.net//layers/m_filter_exploit_maturity
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -440,7 +461,7 @@ exposures:
 
   - name: m_filter_ignored_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_ignored
+    url: https://gaurav.topcoatdev.net//layers/m_filter_ignored
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -448,7 +469,7 @@ exposures:
 
   - name: m_filter_issue_severity_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_issue_severity
+    url: https://gaurav.topcoatdev.net//layers/m_filter_issue_severity
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -456,7 +477,7 @@ exposures:
 
   - name: m_filter_issue_type_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_issue_type
+    url: https://gaurav.topcoatdev.net//layers/m_filter_issue_type
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -464,7 +485,7 @@ exposures:
 
   - name: m_filter_product_name_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_product_name
+    url: https://gaurav.topcoatdev.net//layers/m_filter_product_name
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -472,7 +493,7 @@ exposures:
 
   - name: m_filter_project_criticality_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_criticality
+    url: https://gaurav.topcoatdev.net//layers/m_filter_project_criticality
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -480,7 +501,7 @@ exposures:
 
   - name: m_filter_project_environment_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_environment
+    url: https://gaurav.topcoatdev.net//layers/m_filter_project_environment
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -488,7 +509,7 @@ exposures:
 
   - name: m_filter_project_lifecycle_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_lifecycle
+    url: https://gaurav.topcoatdev.net//layers/m_filter_project_lifecycle
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -496,7 +517,7 @@ exposures:
 
   - name: m_filter_project_name_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_name
+    url: https://gaurav.topcoatdev.net//layers/m_filter_project_name
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -504,7 +525,7 @@ exposures:
 
   - name: m_filter_project_type_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_project_type
+    url: https://gaurav.topcoatdev.net//layers/m_filter_project_type
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -512,7 +533,7 @@ exposures:
 
   - name: m_filter_reachability_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_reachability
+    url: https://gaurav.topcoatdev.net//layers/m_filter_reachability
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -520,7 +541,7 @@ exposures:
 
   - name: m_filter_status_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/m_filter_status
+    url: https://gaurav.topcoatdev.net//layers/m_filter_status
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -528,7 +549,7 @@ exposures:
 
   - name: medium_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/medium_issues
+    url: https://gaurav.topcoatdev.net//layers/medium_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -537,7 +558,7 @@ exposures:
 
   - name: medium_license_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/medium_license
+    url: https://gaurav.topcoatdev.net//layers/medium_license
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -546,7 +567,7 @@ exposures:
 
   - name: new_test_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/new_test
+    url: https://gaurav.topcoatdev.net//layers/new_test
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -554,7 +575,7 @@ exposures:
 
   - name: newtest_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/newtest
+    url: https://gaurav.topcoatdev.net//layers/newtest
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -562,7 +583,7 @@ exposures:
 
   - name: open_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/open_issues
+    url: https://gaurav.topcoatdev.net//layers/open_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -571,7 +592,7 @@ exposures:
 
   - name: open_source_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/open_source_issues
+    url: https://gaurav.topcoatdev.net//layers/open_source_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -580,7 +601,7 @@ exposures:
 
   - name: product_layer_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/product_layer
+    url: https://gaurav.topcoatdev.net//layers/product_layer
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -612,7 +633,7 @@ exposures:
 
   - name: reports_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/reports
+    url: https://gaurav.topcoatdev.net//layers/reports
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -620,7 +641,7 @@ exposures:
 
   - name: search_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/search
+    url: https://gaurav.topcoatdev.net//layers/search
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -628,7 +649,7 @@ exposures:
 
   - name: seed_filtered_ungrouped_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/seed_filtered_ungrouped_issues
+    url: https://gaurav.topcoatdev.net//layers/seed_filtered_ungrouped_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -636,7 +657,7 @@ exposures:
 
   - name: seed_grouped_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/seed_grouped_issues
+    url: https://gaurav.topcoatdev.net//layers/seed_grouped_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -644,7 +665,7 @@ exposures:
 
   - name: seed_projects_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/seed_projects
+    url: https://gaurav.topcoatdev.net//layers/seed_projects
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -652,7 +673,7 @@ exposures:
 
   - name: seed_ungrouped_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/seed_ungrouped_issues
+    url: https://gaurav.topcoatdev.net//layers/seed_ungrouped_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -660,7 +681,7 @@ exposures:
 
   - name: selected_group_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/selected_group
+    url: https://gaurav.topcoatdev.net//layers/selected_group
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -669,7 +690,7 @@ exposures:
 
   - name: selected_org_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/selected_org
+    url: https://gaurav.topcoatdev.net//layers/selected_org
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -702,7 +723,7 @@ exposures:
 
   - name: table_group_by_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/table_group_by
+    url: https://gaurav.topcoatdev.net//layers/table_group_by
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -710,7 +731,7 @@ exposures:
 
   - name: total_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/total_issues
+    url: https://gaurav.topcoatdev.net//layers/total_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -719,7 +740,7 @@ exposures:
 
   - name: value_filter_layer_type_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/value_filter_layer_type
+    url: https://gaurav.topcoatdev.net//layers/value_filter_layer_type
     owner: 
         email: generated@topcoatdata.com
     depends_on:
@@ -727,7 +748,7 @@ exposures:
 
   - name: vuln_issues_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/vuln_issues
+    url: https://gaurav.topcoatdev.net//layers/vuln_issues
     owner: 
         email: generated@topcoatdata.com
     depends_on:
