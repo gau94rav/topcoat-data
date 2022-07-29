@@ -1,6 +1,5 @@
 <template>
     <div>
-        <button @click="openPdf">PDF Page</button>
         <report-header v-if="hasHeader" />
         <div class="bg-[#F9F9FA]">
             <div class="flex w-full gap-10 pb-20 content-block">

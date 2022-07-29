@@ -1,5 +1,5 @@
 <template>
-	<report-sample class="max-w-[1440px] relative left-0 right-0 m-auto">
+	<report class="max-w-[1440px] relative left-0 right-0 m-auto">
 
 		<!-- Filters Left Start -->
 		<t-container slot="filters" gap-x="2">
@@ -34,13 +34,13 @@
                 <t-multi-selector is-expanded t-layer="m_filter_autofixable" t-filter:selected_items="autofixable" item-label="Auto Fixable" />
                 <t-multi-selector is-expanded t-layer="m_filter_exploit_maturity" t-filter:selected_items="exploit_maturity" item-label="Exploit Maturity" />
 
-				<t-tags
+				<!-- <t-tags
                     t-layer='filter_cve'
                     item-label="CVE"
                     t-filter:selected_items="cve"
                     :is-label-capitalized="true"
                     is-searchable
-                />  
+                />   -->
                 
                 <t-tags
                     t-layer='filter_cwe'
@@ -89,6 +89,7 @@
 		<!-- Filters Right Start -->
 		<t-container slot="filters" gap-x="2">
 			<t-pdf-export />
+            <t-pdf-preview-button />
 		</t-container>
 		<!-- Filters Right End -->
 
@@ -185,5 +186,5 @@
 		</TTable>
 		<!-- Layers End -->
 
-	</report-sample>
+	</report>
 </template>

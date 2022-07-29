@@ -99,6 +99,34 @@ exposures:
       - ref('distinct_issues')
       - ref('seed_filtered_ungrouped_issues')
 
+  - name: executive
+    type: 'dashboard'
+    url: https://gaurav.topcoatdev.net/executive
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_calendar')
+      - ref('filter_cve')
+      - ref('filter_cwe')
+      - ref('filter_orgs')
+      - ref('filter_tags')
+      - ref('issue_table')
+      - ref('m_filter_autofixable')
+      - ref('m_filter_exploit_maturity')
+      - ref('m_filter_ignored')
+      - ref('m_filter_issue_severity')
+      - ref('m_filter_issue_type')
+      - ref('m_filter_product_name')
+      - ref('m_filter_project_criticality')
+      - ref('m_filter_project_environment')
+      - ref('m_filter_project_lifecycle')
+      - ref('m_filter_project_name')
+      - ref('m_filter_project_type')
+      - ref('m_filter_reachability')
+      - ref('m_filter_status')
+      - ref('selected_group')
+      - ref('selected_org')
+
   - name: executive_summary
     type: 'dashboard'
     owner: 
@@ -366,7 +394,6 @@ exposures:
     depends_on:
       - ref('all_severity_issues')
       - ref('filter_calendar')
-      - ref('filter_cve')
       - ref('filter_cwe')
       - ref('filter_layer_type')
       - ref('filter_orgs')
@@ -393,9 +420,11 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('all_severity_issues')
+      - ref('filter_cwe')
       - ref('filter_group')
       - ref('filter_layer_type')
       - ref('filter_orgs')
+      - ref('filter_tags')
       - ref('issue_table')
       - ref('m_filter_autofixable')
       - ref('m_filter_exploit_maturity')
@@ -403,6 +432,9 @@ exposures:
       - ref('m_filter_issue_severity')
       - ref('m_filter_issue_type')
       - ref('m_filter_product_name')
+      - ref('m_filter_project_criticality')
+      - ref('m_filter_project_environment')
+      - ref('m_filter_project_lifecycle')
       - ref('m_filter_project_name')
       - ref('m_filter_project_type')
       - ref('m_filter_reachability')
@@ -728,6 +760,14 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('table_group_by')
+
+  - name: test_line_auto_page
+    type: 'dashboard'
+    url: https://gaurav.topcoatdev.net//layers/test_line
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('test_line')
 
   - name: total_issues_auto_page
     type: 'dashboard'

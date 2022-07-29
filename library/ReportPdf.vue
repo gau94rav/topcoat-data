@@ -14,8 +14,10 @@
         <t-grids column-count="2" gap-x="4" gap-y="4" style="grid-template-columns: 40% 60%">
             <slot name="filters"></slot>
         </t-grids>
-
-        <slot></slot>
+        
+        <div class="pagebreak">
+            <slot></slot>
+        </div>
     </div>
 </template>
 
@@ -27,4 +29,8 @@
 	@media print {
 		.pagebreak { page-break-before: always; } /* page-break-after works, as well */
 	}
+
+    #pagingControls #pages { 
+        display: none;
+    }
 </style>
