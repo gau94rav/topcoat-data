@@ -121,3 +121,10 @@ and i.deleted is null
 group by CASE WHEN i.problem_type = 'PACKAGE_VULNERABILITY' THEN i.problem_id ELSE i.natural_key END
 
 order by priority_score desc
+
+{% if filter('limit') %}
+      LIMIT {{  filter('limit') }}
+{% endif %}
+{% if filter('offset') %}
+      OFFSET {{  filter('offset') }}
+{% endif %}

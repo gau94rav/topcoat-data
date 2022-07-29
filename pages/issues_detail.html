@@ -6,14 +6,25 @@
 
 			<t-navigation-dropdown label="Select Report Name" />
 
-			<div class="w-[1px] bg-[#D3D3D9] h-[28px]"></div>
-
-			<!-- <t-select t-layer="filter_group" t-filter:dropdown="groups" label="Groups" item-label="Groups" /> -->
-
-			<t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs"
+            <div class="w-[1px] bg-[#D3D3D9] h-[28px]"></div>
+          
+            <div v-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length > 1">
+             <!-- only in dev in Topcoat--> 
+                <t-select t-layer="filter_group" t-filter:dropdown="groups" label="Groups" item-label="Groups" />
+			    <t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs"
 				label="Organizations" />
+            </div> 
+            <div v-else-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1">
+             <!-- iframe: selected a group so it should only be org --> 
+			    <t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs"
+				label="Organizations" />
+            </div> 
+            <div v-else >
+             <!-- iframe: no filter because they picked one org --> 
+            </div>
+		
 
-			<t-multi-selector t-layer="m_filter_product_name" t-filter:selected_items="product_name" label="Products" />
+			<t-multi-selector t-layer="filter_product_name" t-filter:selected_items="product_name" label="Products" />
 
 			<t-filter-group label="More Filters" max-height="400px">
 				<t-calendar-picker
@@ -24,15 +35,15 @@
                     picker-mode="range"
                     item-label="Last Introduced"
                 />
-				<t-multi-selector is-expanded t-layer="m_filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" />
-                <t-multi-selector is-expanded t-layer="m_filter_issue_severity" t-filter:selected_items="issue_severity" item-label="Issue Severity" />
-                <t-multi-selector is-expanded t-layer="m_filter_project_type" t-filter:selected_items="project_type" item-label="Project Type" />
-                <t-multi-selector is-expanded t-layer="m_filter_reachability" t-filter:selected_items="reachability" item-label="Reachability" />
-                <t-multi-selector is-expanded t-layer="m_filter_issue_type" t-filter:selected_items="issue_type" item-label="Issue Type" />
-                <t-multi-selector is-expanded t-layer="m_filter_ignored" t-filter:selected_items="ignored" item-label="Currently Ignored" />
-                <t-multi-selector is-expanded t-layer="m_filter_status" t-filter:selected_items="status" item-label="Currently Present" />
-                <t-multi-selector is-expanded t-layer="m_filter_autofixable" t-filter:selected_items="autofixable" item-label="Auto Fixable" />
-                <t-multi-selector is-expanded t-layer="m_filter_exploit_maturity" t-filter:selected_items="exploit_maturity" item-label="Exploit Maturity" />
+		        <t-multi-selector is-expanded t-layer="filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" />
+                <t-multi-selector is-expanded t-layer="filter_issue_severity" t-filter:selected_items="issue_severity" item-label="Issue Severity" />
+                <t-multi-selector is-expanded t-layer="filter_project_type" t-filter:selected_items="project_type" item-label="Project Type" />
+                <t-multi-selector is-expanded t-layer="filter_reachability" t-filter:selected_items="reachability" item-label="Reachability" />
+                <t-multi-selector is-expanded t-layer="filter_issue_type" t-filter:selected_items="issue_type" item-label="Issue Type" />
+                <t-multi-selector is-expanded t-layer="filter_ignored" t-filter:selected_items="ignored" item-label="Currently Ignored" />
+                <t-multi-selector is-expanded t-layer="filter_status" t-filter:selected_items="status" item-label="Currently Present" />
+                <t-multi-selector is-expanded t-layer="filter_autofixable" t-filter:selected_items="autofixable" item-label="Auto Fixable" />
+                <t-multi-selector is-expanded t-layer="filter_exploit_maturity" t-filter:selected_items="exploit_maturity" item-label="Exploit Maturity" />
 
 				<t-tags
                     t-layer='filter_cve'
@@ -58,7 +69,7 @@
                 />
                 
                 <t-tags
-                    t-layer='m_filter_project_criticality'
+                    t-layer='filter_project_criticality'
                     item-label="Project Criticality"
                     t-filter:selected_items="criticality"
                     :is-label-capitalized="true"
@@ -66,7 +77,7 @@
                 /> 
 
                 <t-tags
-                    t-layer='m_filter_project_environment'
+                    t-layer='filter_project_environment'
                     item-label="Project Environment"
                     t-filter:selected_items="environment"
                     :is-label-capitalized="true"
@@ -74,7 +85,7 @@
                 /> 
 
                 <t-tags
-                    t-layer='m_filter_project_lifecycle'
+                    t-layer='filter_project_lifecycle'
                     item-label="Project Lifecycle"
                     t-filter:selected_items="lifecycle"
                     :is-label-capitalized="true"
@@ -102,10 +113,67 @@
 				<span  class="base-heading text-xl font-normal text-[#211F47] leading-6">Issues by</span>
 				<t-select t-layer="filter_layer_type" t-filter:dropdown="issue_by" label="Issues By"
 					item-label="Issues_by" />
-			</t-container>
+			</t-container>	
 		</t-container>
+        <t-vis-grouper
+			t-layer="all_severity_issues"
+			t-class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-1"
+			slot="mid"
+			>
+			<t-big-number
+		        label="TOTAL"
+	          	big-number-size="big"
+				t-value-column="TOTAL"
+	      	/>
 
-		<t-issues-big-number-group t-layer="all_severity_issues" slot="mid" />
+        	<t-big-number
+	          label="UNIQUE"
+	          big-number-size="big"
+			t-value-column="TOTAL_UNIQUE"
+        	/>
+
+            <t-big-number
+                label="CRITICAL"
+                big-number-size="small"
+                bg-color="#FFDAD866"
+                text-color="#8F0018"
+                t-value-column="CRITICAL"
+            >
+                <shield-half-full-icon slot="icon" size="18" />
+            </t-big-number/>
+
+            <t-big-number
+                label="HIGH"
+                big-number-size="small"
+                bg-color="#FFDBCC66"
+                text-color="#9B3D15"
+                t-value-column="HIGH"
+            >
+                <shield-half-full-icon slot="icon" size="18" />
+            </t-big-number>
+
+            <t-big-number
+                label="MEDIUM"
+                big-number-size="small"
+                bg-color="#FFE8CD66"
+                text-color="#925C1E"
+                t-value-column="MEDIUM"
+            >
+                <shield-half-full-icon slot="icon" size="18" />
+            </t-big-number>
+
+            <t-big-number
+                label="LOW"
+                big-number-size="small"
+                bg-color="#EEEEEE66"
+                t-value-column="LOW"
+            >
+                <shield-half-full-icon slot="icon" size="18" />
+            </t-big-number>
+		</t-vis-grouper>
+
+		<!-- <t-issues-big-number-group t-layer="all_severity_issues" slot="mid" /> -->
+
 		<!-- Beginning of filter testing. comment out row above to test this section 
       filter_layer_type[0].OPTION.value
       filter_layer_type.OPTION.value
@@ -141,8 +209,21 @@
 		</t-container>
 
 		<!-- Layers Start -->
-		<TTable full_width t-layer="issue_table" :can-search="false" :is-header-fixed="true" :can-sort="false"
-			sort-direction="desc" :canPageServer="true" :exludeFromColumns="['ISSUE_TYPE','CVE','PROBLEM_ID']">
+    <!-- TODO: reinstate the ungrouped issues table -->
+            <!-- <TTable 
+                  :can-search="false" 
+                  t-layer="seed_grouped_issues" 
+                  :is-header-fixed="true" 
+                  :can-sort="false"
+                  canCollapseDetailRows
+                  :exludeFromColumns="['URL','CVE','PROBLEM_ID', 'ORIGINAL_SEVERITY', 'PACKAGE', 'ISSUE_TYPE']"
+            >
+                  <template v-slot:detail_row_slot="row">
+                        <h1>COMING SOON... PROJECT DATA</h1>
+                  </template> -->
+    <!-- START: COPIED FROM UNGROUPED TABLE -->
+    <TTable full_width t-layer="issue_table" :can-search="false" :is-header-fixed="true" :can-sort="false"
+			sort-direction="desc" :canPageServer="true" :exludeFromColumns="['ISSUE_TYPE','PROBLEM_ID','PROJECT_URL','CODE_URL']">
 			<t-column header=" " id-or-name="ISSUE_SEVERITY">
 				<IssueSeverityIcon :severity="value" />
 			</t-column>
@@ -151,19 +232,32 @@
 			</t-column>
 			<t-column header="ISSUE" id-or-name="PROBLEM_TITLE" >
                 <div class="text-[#145DEB] text-sm font-medium leading-[15px] tracking-[0.1px]">{{row.ISSUE_TYPE.value}}</div>
-				<span v-if="row.ISSUE_TYPE.value == 'Vulnerability'">
-    				<TUrl :url="'https://security.snyk.io/vuln/'+row.PROBLEM_ID.value" target="_blank"> {{rendered_value}} </TUrl>
+                        <span v-if="row.PRODUCT_NAME.value == 'Snyk Code'">
+    				      <TUrl :url="'https://app.snyk.io/org/'+row.CODE_URL.value" :includeFilterParams="false"> {{rendered_value}} </TUrl>
+				</span>
+                        <span v-else-if="row.ISSUE_TYPE.value == 'Vulnerability' ">
+    				      <TUrl :url="'https://security.snyk.io/vuln/'+row.PROBLEM_ID.value" :includeFilterParams="false"> {{rendered_value}} </TUrl>
+				</span>
+                        <span v-else-if="row.ISSUE_TYPE.value == 'License'">
+    				      <TUrl :url="'https://app.snyk.io/org/'+row.CODE_URL.value" :includeFilterParams="false"> {{rendered_value}} </TUrl>
 				</span>
 				<span v-else>
 					{{rendered_value}}
 				</span>
             </t-column> 
-			<t-column header="IDENTIFIERS" id-or-name="CWE">
-				<div class="text-[#145DEB] text-sm font-normal">
-					{{ JSON.parse(row.CWE.value).concat(JSON.parse(row.CVE.value)).join() }}
-				</div>
-			</t-column>
-			<t-column header="PROJECT" id-or-name="PROJECT_NAME" />
+			<t-column header="CVE" id-or-name="CVE">
+                <div v-for=="CVE in JSON.parse(value)" class="text-[#145DEB] text-sm font-normal">
+                    <TUrl :url="'https://www.cve.org/CVERecord?id='+CVE" :includeFilterParams="false"> {{ CVE }} </TUrl>
+                </div>
+            </t-column>
+            <t-column header="CWE" id-or-name="CWE">
+                <div v-for=="CWE in JSON.parse(value)" class="text-[#145DEB] text-sm font-normal">
+                    <TUrl :url="'https://cwe.mitre.org/data/definitions/'+CWE.replace('CWE-', '')" :includeFilterParams="false"> {{ CWE }} </TUrl>
+                </div>
+            </t-column>
+			<t-column header="PROJECT" id-or-name="PROJECT_NAME">
+            <TUrl :url="'https://app.snyk.io/org/'+row.PROJECT_URL.value" :includeFilterParams="false"> {{rendered_value}} </TUrl>
+            </t-column>   
 			<t-column header="EXPLOIT MATURITY" id-or-name="EXPLOIT_MATURITY">
 				<span v-if="rendered_value">
                     {{ rendered_value.split('-').map((w) => _.capitalize(w)).join(' ') }}
@@ -171,7 +265,7 @@
 			</t-column>
 			<t-column header="AUTO FIXABLE" id-or-name="AUTOFIXABLE">
 				<span class="flex text-sm text-normal text-[#727184] leading-[17px]">
-					<CheckOrX :value="value !== 'Not Auto Fixable'" />
+					<CheckOrX :value="value !== 'No' && value !== ''" />
 					<div>{{ value }}</div>
 				</span>
 			</t-column>
@@ -182,7 +276,14 @@
 				<open-or-fixed :isOpen="value" />
 			</t-column>
 			<t-column header="PRODUCT" id-or-name="PRODUCT_NAME" />
+            <!-- START: COPIED FROM UNGROUPED TABLE -->
+                  <!-- <t-column header="PROJECTS" id-or-name="PROJECT_COUNT">
+                        <span>
+                              {{ rendered_value }}
+                        </span>
+                  </t-column> -->
 		</TTable>
+		
 		<!-- Layers End -->
 
 	</report>

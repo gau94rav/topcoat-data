@@ -1,7 +1,6 @@
  
-SELECT distinct autofixable
+SELECT autofixable
 
-from {{ ref('seed_filtered_ungrouped_issues') }}
---where autofixable not in ('Upgrade, Patch', 'Upgrade, Pin')
- 
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_AUTOFIXABLE"
+
  

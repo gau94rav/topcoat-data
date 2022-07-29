@@ -1,8 +1,7 @@
 SELECT distinct
-        'CWE' as key,
-       trim(F.value, '"') AS value 
-FROM   "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V4" pa, 
-       Table(Flatten(pa.CWE)) F
+key,
+value
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_CWE"
 where 1=1
 {% if filter('orgs') %}
 and org_public_id = '{{ filter('orgs')}}'

@@ -1,7 +1,7 @@
 
 
-select distinct project_id, project_name
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V3"
+select project_id, project_name
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_PROJECT_NAME"
 where {{ authorized_orgs('org_public_id', 'group_public_id') }}
 {% if filter('orgs') %}
 and org_public_id = '{{ filter('orgs')}}'

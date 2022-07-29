@@ -1,12 +1,9 @@
 
  
-select distinct project_type
+select project_type
 
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V3"
-where 1=1
-{% if filter('orgs') %}
-and org_public_id = '{{ filter('orgs')}}'
-{% endif %}
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_PROJECT_TYPE"
+order by 1
 
 {{ column(
  name='PROJECT_TYPE',

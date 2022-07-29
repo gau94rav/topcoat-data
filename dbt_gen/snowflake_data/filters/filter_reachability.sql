@@ -1,7 +1,7 @@
  
-select distinct reachability
+select reachability
 
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V3"
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_REACHABILITY"
 
 
  

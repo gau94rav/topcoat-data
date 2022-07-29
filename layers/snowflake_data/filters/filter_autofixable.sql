@@ -1,10 +1,11 @@
 
  
-SELECT distinct autofixable
-
-from {{ref('seed_filtered_ungrouped_issues')}}
---where autofixable not in ('Upgrade, Patch', 'Upgrade, Pin')
  
+select INITCAP(is_currently_ignored) as autofixable
+
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_CURRENTLY_IGNORED"
+
+
 {{ column(
  name='AUTOFIXABLE',
  tags=['ids','names']

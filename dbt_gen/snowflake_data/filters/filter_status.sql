@@ -1,7 +1,7 @@
  
-select distinct is_currently_present
+select is_currently_present
 
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V3"
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_CURRENTLY_PRESENT"
 
 
  

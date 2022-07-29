@@ -1,7 +1,7 @@
 
  
 SELECT distinct group_public_id, group_name
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V4"
+from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
 where {{ authorized_orgs('org_public_id', 'group_public_id') }}
 
 

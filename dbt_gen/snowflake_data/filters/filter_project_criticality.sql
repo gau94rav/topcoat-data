@@ -1,5 +1,5 @@
-SELECT distinct
-        'Criticality' as key,
-       INITCAP(trim(F.value, '"')) AS value 
-FROM   "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V3" pa, 
-       Table(Flatten(pa.criticality)) F
+SELECT 
+KEY,
+VALUE 
+FROM   "DATA_PRODUCTS"."PROD_MARTS"."DIM_CRITICALITY"
+order by SORT_COLUMN

@@ -1,4 +1,6 @@
-SELECT ISSUE_SEVERITY,
+SELECT
+
+ISSUE_SEVERITY,
 PRIORITY_SCORE,
 PROBLEM_ID,
 ISSUE_TYPE,
@@ -10,9 +12,12 @@ EXPLOIT_MATURITY,
 AUTOFIXABLE,
 LAST_INTRODUCED,
 IS_CURRENTLY_PRESENT,
-PRODUCT_NAME
+PRODUCT_NAME,
+PROJECT_URL,
+concat(Project_url,'#issue-',problem_id) as code_url
 
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V4"
+from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+
 where {{ authorized_orgs('org_public_id', 'group_public_id') }}
 {% if filter('orgs') %}
 and org_public_id = '{{ filter('orgs')}}'
@@ -89,8 +94,10 @@ and product_name in ({{ filter('product_name')| to_sql_list}})
 and reachability in ({{ filter('reachability')| to_sql_list}})
 {% endif %}
 
-{% if filter('autofixable') %}
-and autofixable in ({{ filter('autofixable')| to_sql_list}})
+{% if filter('autofixable') == 'True' %}
+and autofixable != 'No'
+{% elif filter('autofixable') == 'False' %}
+and autofixable = 'No'
 {% endif %}
 
 {% if filter('exploit_maturity') %}

@@ -55,6 +55,14 @@ exposures:
       - ref('code_vuln_issues')
       - ref('seed_filtered_ungrouped_issues')
 
+  - name: combined_layer_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/combined_layer
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('combined_layer')
+
   - name: component
     type: 'dashboard'
     owner: 
@@ -89,6 +97,14 @@ exposures:
     depends_on:
       - ref('critical_issues')
       - ref('seed_filtered_ungrouped_issues')
+
+  - name: current_period_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/current_period
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('current_period')
 
   - name: distinct_issues_auto_page
     type: 'dashboard'
@@ -139,7 +155,6 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('filter_autofixable')
-      - ref('seed_filtered_ungrouped_issues')
 
   - name: filter_calendar_auto_page
     type: 'dashboard'
@@ -164,6 +179,14 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('filter_cwe')
+
+  - name: filter_exploit_maturity_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_exploit_maturity
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_exploit_maturity')
 
   - name: filter_group_auto_page
     type: 'dashboard'
@@ -212,6 +235,22 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('filter_orgs')
+
+  - name: filter_patchable_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_patchable
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_patchable')
+
+  - name: filter_pinnable_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_pinnable
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_pinnable')
 
   - name: filter_product_name_auto_page
     type: 'dashboard'
@@ -293,6 +332,14 @@ exposures:
     depends_on:
       - ref('filter_tags')
 
+  - name: filter_upgradeable_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/filter_upgradeable
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('filter_upgradeable')
+
   - name: high_issues_auto_page
     type: 'dashboard'
     url: https://snyk-insights.topcoatdata.app//layers/high_issues
@@ -365,26 +412,26 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('all_severity_issues')
+      - ref('filter_autofixable')
       - ref('filter_calendar')
       - ref('filter_cve')
       - ref('filter_cwe')
+      - ref('filter_exploit_maturity')
+      - ref('filter_ignored')
+      - ref('filter_issue_severity')
+      - ref('filter_issue_type')
       - ref('filter_layer_type')
       - ref('filter_orgs')
+      - ref('filter_product_name')
+      - ref('filter_project_criticality')
+      - ref('filter_project_environment')
+      - ref('filter_project_lifecycle')
+      - ref('filter_project_name')
+      - ref('filter_project_type')
+      - ref('filter_reachability')
+      - ref('filter_status')
       - ref('filter_tags')
       - ref('issue_table')
-      - ref('m_filter_autofixable')
-      - ref('m_filter_exploit_maturity')
-      - ref('m_filter_ignored')
-      - ref('m_filter_issue_severity')
-      - ref('m_filter_issue_type')
-      - ref('m_filter_product_name')
-      - ref('m_filter_project_criticality')
-      - ref('m_filter_project_environment')
-      - ref('m_filter_project_lifecycle')
-      - ref('m_filter_project_name')
-      - ref('m_filter_project_type')
-      - ref('m_filter_reachability')
-      - ref('m_filter_status')
       - ref('selected_group')
 
   - name: key_value_layer_auto_page
@@ -429,6 +476,22 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('m_filter_autofixable')
+
+  - name: m_filter_cve_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_cve
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_cve')
+
+  - name: m_filter_cwe_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_cwe
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_cwe')
 
   - name: m_filter_exploit_maturity_auto_page
     type: 'dashboard'
@@ -526,6 +589,14 @@ exposures:
     depends_on:
       - ref('m_filter_status')
 
+  - name: m_filter_tags_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/m_filter_tags
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('m_filter_tags')
+
   - name: medium_issues_auto_page
     type: 'dashboard'
     url: https://snyk-insights.topcoatdata.app//layers/medium_issues
@@ -578,6 +649,14 @@ exposures:
       - ref('open_source_issues')
       - ref('seed_filtered_ungrouped_issues')
 
+  - name: previous_period_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/previous_period
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('previous_period')
+
   - name: product_layer_auto_page
     type: 'dashboard'
     url: https://snyk-insights.topcoatdata.app//layers/product_layer
@@ -585,6 +664,14 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('product_layer')
+
+  - name: project_url_test_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/project_url_test
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('project_url_test')
 
   - name: report_executive_summary
     type: 'dashboard'
@@ -617,6 +704,14 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('reports')
+
+  - name: scratch_auto_page
+    type: 'dashboard'
+    url: https://snyk-insights.topcoatdata.app//layers/scratch
+    owner: 
+        email: generated@topcoatdata.com
+    depends_on:
+      - ref('scratch')
 
   - name: search_auto_page
     type: 'dashboard'

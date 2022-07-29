@@ -1,7 +1,7 @@
  
 
-SELECT distinct issue_type
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V3"
+SELECT issue_type
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_ISSUE_TYPE"
 
 
  

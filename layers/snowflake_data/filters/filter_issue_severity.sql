@@ -1,8 +1,8 @@
 
  
-SELECT distinct issue_severity
-from "SANDBOX"."TC_TEST"."ALL_ISSUES_CLUSTERED_TEST_V4"
-
+SELECT issue_severity
+from "DATA_PRODUCTS"."PROD_MARTS"."DIM_ISSUE_SEVERITY"
+order by sort_column
  
 {{ column(
  name='ISSUE_SEVERITY',
