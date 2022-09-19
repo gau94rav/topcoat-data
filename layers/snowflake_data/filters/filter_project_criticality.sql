@@ -4,7 +4,7 @@ SELECT
 KEY,
 VALUE 
 FROM   "DATA_PRODUCTS"."PROD_MARTS"."DIM_CRITICALITY"
-order by SORT_COLUMN
+order by SORT_COLUMN desc
 {{ column(
    name='KEY',
    tags=['keys']

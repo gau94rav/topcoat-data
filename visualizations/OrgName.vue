@@ -1,12 +1,18 @@
 <template>
-    <span>
+    <div class="pr-10">
         <t-loading-spinner position="relative" v-if="loading" />
-        <span v-else>Issues in {{ label }}</span>
-    </span>
+        <span v-else><span v-if="!hideIssuesInLabel">Issues in</span> {{ label }}</span>
+    </div>
 </template>
 
 <script>
     export default {
+        props: {
+            hideIssuesInLabel: {
+                type: Boolean,
+                default: false,
+            }
+        },
         data: () => ({
             is_filter: true,
         }),
@@ -17,6 +23,9 @@
                 }
                 return "";
             }
+        },
+        mounted() {
+            this.fetchLayerData();
         }
     }
 </script>

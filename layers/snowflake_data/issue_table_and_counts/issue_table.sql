@@ -11,23 +11,51 @@ PROJECT_NAME,
 EXPLOIT_MATURITY,
 AUTOFIXABLE,
 LAST_INTRODUCED,
-IS_CURRENTLY_PRESENT,
+FIRST_INTRODUCED as INTRODUCED,
+--IS_CURRENTLY_PRESENT,
 PRODUCT_NAME,
 PROJECT_URL,
-concat(Project_url,'#issue-',problem_id) as code_url
+ISSUE_URL,
+
+    case when is_currently_present = false then 'Resolved'
+when is_currently_present = true and is_currently_ignored = false then 'Open'
+else 'Ignored' end as issue_status
 
 from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
 
 where {{ authorized_orgs('org_public_id', 'group_public_id') }}
 {% if filter('orgs') %}
-and org_public_id = '{{ filter('orgs')}}'
+and org_public_id in ({{ filter('orgs') | to_sql_list}})
 {% endif %}
 {% if filter('groups') %}
 and group_public_id in ({{ filter('groups')| to_sql_list}})
 {% endif %}
 
+{% if filter('min') and filter('max') %}
+and (priority_score between '{{ filter('min') }}' and '{{ filter('max') }}')
+{% endif %}
+
+{% if filter('introduced_start') and filter('introduced_end') %}
+and (to_date(first_introduced) >= '{{ filter('introduced_start') }}' 
+and to_date(first_introduced) <= '{{ filter('introduced_end') }}')
+{% endif %}
+
+{% if filter('last_disappeared_start') and filter('last_disappeared_end') %}
+and (to_date(last_disappeared) >= '{{ filter('last_disappeared_start') }}' 
+and to_date(last_disappeared) <= '{{ filter('last_disappeared_end') }}')
+{% endif %}
+
+{% if filter('last_introduced_start') and filter('last_introduced_end') %}
+and (to_date(last_introduced) >= '{{ filter('last_introduced_start') }}' 
+and to_date(last_introduced) <= '{{ filter('last_introduced_end') }}')
+{% endif %}
+
 {% if filter('project_name') %}
 and project_id in ({{ filter('project_name')| to_sql_list}})
+{% endif %}
+
+{% if filter('issue_status') %}
+and issue_status in ({{ filter('issue_status')| to_sql_list}})
 {% endif %}
 
 {% if filter('criticality') is iterable %}
@@ -66,14 +94,10 @@ or
 
 {% if filter('ignored') %}
 and INITCAP(is_currently_ignored) in ({{ filter('ignored')| to_sql_list}})
-{% else %}
-and INITCAP(is_currently_ignored) = 'False'
 {% endif %}
 
 {% if filter('status') %}
 and INITCAP(is_currently_present) in ({{ filter('status')| to_sql_list}})
-{% else %}
-and INITCAP(is_currently_present) = 'True'
 {% endif %}
 
 {% if filter('project_type') %}
@@ -107,7 +131,7 @@ and exploit_maturity in ({{ filter('exploit_maturity')| to_sql_list}})
 {% if filter('tags') is iterable %}
  and (
       {% for tag in filter('tags') | to_sql_tags %}
-                 (to_variant(tag_value_key) like '%{{tag.value}}%' and to_variant(tag_value_key) like '%{{tag.key}}%')
+                 (to_variant(tag_value_key) like '%"{{tag.value}}_%' and to_variant(tag_value_key) like '%_{{tag.key}}"%')
             {% if not loop.last %}
                   or
             {% endif %} 
@@ -118,7 +142,7 @@ and exploit_maturity in ({{ filter('exploit_maturity')| to_sql_list}})
 {% if filter('cve') is iterable %}
 and (
 {% for tag in filter('cve') | to_sql_tags %}
-cve like '%{{tag.value}}%'
+cve like '%"{{tag.value}}"%'
 {% if not loop.last %}
 or
 {% endif %}
@@ -129,7 +153,7 @@ or
 {% if filter('cwe') is iterable %}
 and (
 {% for tag in filter('cwe') | to_sql_tags %}
-cwe like '%{{tag.value}}%'
+cwe like '%"{{tag.value}}"%'
 {% if not loop.last %}
 or
 {% endif %}
