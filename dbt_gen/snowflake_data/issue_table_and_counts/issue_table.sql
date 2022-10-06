@@ -15,7 +15,7 @@ IS_CURRENTLY_PRESENT,
 PRODUCT_NAME,
 PROJECT_URL
 
-from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+from "REPORTING"."MIGRATED_MARTS"."ISSUES"
 
 where  (group_public_id IN ('group_id') OR org_public_id IN ('org_id')) 
 

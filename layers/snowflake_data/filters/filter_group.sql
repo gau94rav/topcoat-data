@@ -1,7 +1,7 @@
 
  
 SELECT distinct group_public_id, group_name
-from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+from "REPORTING"."MIGRATED_MARTS"."ISSUES"
 where {{ authorized_orgs('org_public_id', 'group_public_id') }}
 
 

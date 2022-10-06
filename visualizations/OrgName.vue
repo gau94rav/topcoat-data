@@ -1,12 +1,17 @@
 <template>
-    <span>
+    <div class="pr-10">
         <t-loading-spinner position="relative" v-if="loading" />
-        <span v-else>Issues in {{ label }}</span>
-    </span>
+        <span v-else>{{prefix}} {{ label }}</span>
+    </div>
 </template>
 
 <script>
     export default {
+        props: {
+            prefix: {
+                type: String,
+            }
+        },
         data: () => ({
             is_filter: true,
         }),
@@ -17,6 +22,9 @@
                 }
                 return "";
             }
+        },
+        mounted() {
+            this.fetchLayerData();
         }
     }
 </script>

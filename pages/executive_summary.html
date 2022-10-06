@@ -1,171 +1,258 @@
 <template>
-    <executive-summary
-        class="max-w-[1440px] relative left-0 right-0 m-auto"
-    >
-
-        <!-- Filters Left Start -->
-        <t-container slot="filters" gap-x="2">
-
-            <t-navigation-dropdown label="Select Report Name" />
-
-            <div class="w-[1px] bg-[#D3D3D9] h-[28px]"></div>
-
-            <t-select t-layer="filter_group" t-filter:dropdown="groups" label="Groups" item-label="Groups" />
-
-            <t-multi-selector t-layer="filter_orgs" t-filter:selected_items="orgs" label="Organizations" />
-
-            <t-multi-selector default-value="Snyk Container|Snyk IaC" t-layer="m_filter_product_name" t-filter:selected_items="product_name" label="Products" />
-
-            <t-filter-group label="More Filters" max-height="400px">
-                <t-calendar-picker
-                    t-filter:start_date="start_date"
-                    t-filter:end_date='end_date'
-                    t-filter:date_preset="date_preset"
-                    t-layer="filter_calendar"
-                    picker-mode="range"
-                    item-label="Last Introduced"
-                />
-                <t-multi-selector is-expanded t-layer="m_filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" />
-                <t-multi-selector is-expanded t-layer="m_filter_issue_severity" t-filter:selected_items="issue_severity" item-label="Issue Severity" />
-                <t-multi-selector is-expanded t-layer="m_filter_project_type" t-filter:selected_items="project_type" item-label="Project Type" />
-                <t-multi-selector is-expanded t-layer="m_filter_reachability" t-filter:selected_items="reachability" item-label="Reachability" />
-                <t-multi-selector is-expanded t-layer="m_filter_issue_type" t-filter:selected_items="issue_type" item-label="Issue Type" />
-                <t-multi-selector is-expanded t-layer="m_filter_ignored" t-filter:selected_items="ignored" item-label="Currently Ignored" />
-                <t-multi-selector is-expanded t-layer="m_filter_status" t-filter:selected_items="status" item-label="Currently Present" />
-                <t-multi-selector is-expanded t-layer="m_filter_autofixable" t-filter:selected_items="autofixable" item-label="Auto Fixable" />
-                <t-multi-selector is-expanded t-layer="m_filter_exploit_maturity" t-filter:selected_items="exploit_maturity" item-label="Exploit Maturity" />
-                  
-                <t-tags
-                    t-layer='filter_cve'
-                    item-label="CVE"
-                    t-filter:selected_items="cve"
-                    :is-label-capitalized="true"
-                    is-searchable
-                />  
-                
-                <t-tags
-                    t-layer='filter_cwe'
-                    item-label="CWE"
-                    t-filter:selected_items="cwe"
-                    :is-label-capitalized="true"
-                    is-searchable
-                />  
-                <t-tags
-                    t-layer='filter_tags'
-                    item-label="Project Tags"
-                    t-filter:selected_items="tags"
-                    :is-label-capitalized="true"
-                    is-searchable
-                />
-                
-                <t-tags
-                    t-layer='m_filter_project_criticality'
-                    item-label="Project Criticality"
-                    t-filter:selected_items="criticality"
-                    :is-label-capitalized="true"
-                    is-searchable
-                /> 
-
-                <t-tags
-                    t-layer='m_filter_project_environment'
-                    item-label="Project Environment"
-                    t-filter:selected_items="environment"
-                    :is-label-capitalized="true"
-                    is-searchable
-                /> 
-
-                <t-tags
-                    t-layer='m_filter_project_lifecycle'
-                    item-label="Project Lifecycle"
-                    t-filter:selected_items="lifecycle"
-                    :is-label-capitalized="true"
-                    is-searchable
-                /> 
-            </t-filter-group>
-            
-
-        </t-container>
-        <!-- Filters Left End -->
-
-        <!-- Filters Right Start -->
-        <t-container slot="filters" gap-x="2">
-          
-            <t-pdf />
-        </t-container>
-        <!-- Filters Right End -->
-
-        <!-- Mid Section Start -->
-        <t-container slot="mid" is-full-width is-justify-between class="pb-5">
-            <div style="width: 100%" class="base-heading text-xl font-normal text-[#211F47] leading-6">
-                <!-- <org-name t-filter:param="orgs" t-layer="selected_org" /> -->
-                <group-name t-filter:param="groups" t-layer="selected_group" />
-            </div>
-            <!-- <t-container gap-x="2" class="w-full">
-                <span  class="base-heading text-xl font-normal text-[#211F47] leading-6">Issues by</span>
-                <t-select t-layer="filter_layer_type" t-filter:dropdown="issue_by" label="Issues By" item-label="Issues_by" />
-            </t-container> -->
-        </t-container>
-
-         <t-big-numbers-group t-layer="all_severity_issues" slot="mid" />  
-      <!-- Beginning of filter testing. comment out row above to test this section 
-      filter_layer_type[0].OPTION.value
-      filter_layer_type.OPTION.value
-      row.OPTION.value
-      -->
-
-     <!-- <value_filter_layer_type>
-        <div v-if="value_filter_layer_type[0].option.rendered == 'Severity'">
-            <t-issues-big-number-group t-layer="all_severity_issues" slot="mid" />
+    <report class="max-w-[1440px] relative left-0 right-0 m-auto">
+  
+      <!-- Filters left side -->
+      <t-container slot="filters" gap-x="2">
+  
+        <t-navigation-dropdown label="Select Report Name" />
+  
+        <div class="w-[1px] md:relative absolute hidden md:block left-1 bg-[#D3D3D9] h-[28px]"></div>
+  
+        <div v-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length > 1">
+              <!-- only in dev in Topcoat-->
+          <t-select t-layer="filter_group" t-filter:dropdown="groups" label="Groups" item-label="Groups" />
+          <t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs" label="Organizations" />
         </div>
-        <div v-else-if="value_filter_layer_type[0].option.rendered == 'Product Name'" >
-            <t-issues-big-number-group t-layer="all_product_numbers" slot="mid" /> 
+  
+        <div v-else-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1">
+          <!-- iframe: selected a group so it should only be org -->
+          <t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs" label="Organizations" />
         </div>
-        <div v-else >
-            <t-issues-big-number-group t-layer="all_severity_issues" slot="mid" />
+  
+        <div v-else>
+          <!-- iframe: no filter because they picked one org -->
         </div>
-    </value_filter_layer_type>  -->
-    
-     <!-- End of filter testing -->    
+  
+        <t-multi-selector t-layer="filter_product_name" t-filter:selected_items="product_name" label="Products" />
+  
+        <t-filter-group label="More Filters" max-height="400px">
+                    <t-multi-selector is-expanded t-layer="filter_autofixable" t-filter:selected_items="autofixable" item-label="Auto Fixable" /> 
+                    <t-multi-selector is-expanded default-value="False" t-layer="filter_ignored" t-filter:selected_items="ignored" item-label="Currently Ignored" />
+                    <t-tags-input is-single-tag t-layer='filter_cve' item-label="CVE" t-filter:selected_items="cve" :is-label-capitalized="true" /> 
+                    <t-tags-input is-single-tag t-layer='filter_cwe' item-label="CWE" t-filter:selected_items="cwe" :is-label-capitalized="true" />  
+                    <t-multi-selector is-expanded t-layer="filter_exploit_maturity" t-filter:selected_items="exploit_maturity" item-label="Exploit Maturity" />
+                    <t-multi-selector is-expanded t-layer="filter_issue_severity" t-filter:selected_items="issue_severity" item-label="Issue Severity" />
+                    <t-multi-selector is-expanded t-layer="filter_issue_type" t-filter:selected_items="issue_type" item-label="Issue Type" />
+                    <t-range-input t-layer="filter_priority_score" t-filter:min="min" t-filter:max="max" t-min-column="MIN" t-max-column="MAX" item-label="Priority Score" />
+                    <t-tags-input is-single-tag t-layer='filter_project_criticality' item-label="Project Criticality" t-filter:selected_items="criticality" :is-label-capitalized="true" /> 
+                    <t-tags-input is-single-tag t-layer='filter_project_environment' item-label="Project Environment" t-filter:selected_items="environment" :is-label-capitalized="true" /> 
+                    <t-tags-input is-single-tag t-layer='filter_project_lifecycle' item-label="Project Lifecycle" t-filter:selected_items="lifecycle" :is-label-capitalized="true" /> 
+                    <t-multi-selector is-expanded t-layer="filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" is-searchable />
+                    <t-tags-input t-layer='filter_tags' item-label="Project Tags" t-filter:selected_items="tags" :is-label-capitalized="true" />
+                    <t-multi-selector is-expanded t-layer="filter_project_type" t-filter:selected_items="project_type" item-label="Project Type" />
+                    <t-multi-selector is-expanded t-layer="filter_reachability" t-filter:selected_items="reachability" item-label="Reachability" />
+          </t-filter-group>
         
-        <!-- Mid Section End -->
+      </t-container>
+  
+      <!-- Filters right side -->
+      <t-container slot="filters" gap-x="2">
+        <!-- Note if first value should be unselected by default, set :is-unselectable="true" -->
+        <t-date-picker 
+          t-layer="filter_calendar" 
+          t-filter:start_date="issue_summary_start" 
+          t-filter:end_date="issue_summary_end" 
+          t-filter:date_preset="range_preset" 
+          date-format="YYYY-MM-DD" 
+          default-date-preset= "Last 30 Days" 
+          item-label="Date Range" 
+        />
 
-        <!-- Full Width Chart -->
-        <div slot="chart">
-            <t-container is-justify-between is-full-width class="pb-5">
-                <div class="text-base font-medium text-[#211F47] leading-6">Issues Identification and Resolution</div>
-            </t-container>
-            <img :src="'/static/' + whoami.instance_name + '/images/line-chart.jpg'" />
+        <!-- Todo: Date filter layer -->
+        <!-- <t-select t-key-column="KEY" t-value-column="VALUE" :is-unselectable="false" label="Filter by date" t-filter:dropdown="date">
+          <calendar-blank-outline-icon slot="icon" size="18" />
+          
+        </t-select> -->
+        
+        <t-url-copy-button />
+
+        <t-pdf :options="{ paperWidth: 20, paperHeight: 11.5 }" />
+
+      </t-container>
+
+      <div class="flex gap-1 items-center text-xl" slot="mid">
+        <div class="text-[#555463] leading-6" v-if="whoami">
+          <div v-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1">
+              <group-name t-filter:param="groups" t-layer="selected_org" prefix="Issues in" /> 
+          </div> 
+          <div v-else-if= "whoami && whoami.custom_attributes.snyk_user_reports_org_ids.length == 1">
+              <org-name t-filter:param="groups" t-layer="selected_org" prefix="Issues in" />               
+          </div>
         </div>
-        <!-- End Full Width Chart -->
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-2 md:gap-1 lg:gap-1">
+      <!-- <t-grids column-count="4" gap-x="1" gap-y="1" slot="mid" class="pt-5"> -->
+        <t-big-number label="TOTAL OPEN" t-layer="big_num_open_issues" t-value-column="OPEN_C" t-previous-column="OPEN_P" :number-format-limit="99999">
+          <div slot="tooltip" class="text-sm leading-[18px] font-normal break-normal">
+            The number of open issues as of the last day in the date range selected.
+          </div>
+        </t-big-number>
+        <!-- <div v-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1">
+            <TURL :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'" 
+              :additionalUrlParams="{'last_introduced_start': filters?.issue_summary_start, 'last_introduced_end': filters?.issue_summary_end, 'issue_status': 'Open%257CResolved' }" 
+              :includeUrlStyle="false"
+              :includeContextParam="false">
+              <t-big-number label="TOTAL IDENTIFIED" t-layer="big_num_new_issues" t-value-column="NEW_VULN_C" t-previous-column="NEW_VULN_P" numberTextColor="#145DEB"/>
+            </TURL>
+        </div>
+        <div v-else-if= "whoami && whoami.custom_attributes.snyk_user_reports_org_ids.length == 1"> -->
+            <t-big-number label="TOTAL NEW" t-layer="big_num_new_issues" t-value-column="NEW_VULN_C" t-previous-column="NEW_VULN_P" :number-format-limit="99999">
+              <div slot="tooltip" class="text-sm leading-[18px] font-normal break-normal">
+                The number of new issues identified during the date range selected.
+              </div>
+            </t-big-number>
+        <!-- </div>
 
-        <!-- Grid Chart -->
-        <t-container is-full-width is-justify-between slot="charts">
-            <t-grids column-count="2" style="width: 100%" gap-x="4">
-                <div>
-                    <t-container is-justify-between is-full-width class="pb-5">
-                        <div class="text-base font-medium text-[#211F47] leading-6">Exposure Window</div>
-                    </t-container>
-                    <img :src="'/static/' + whoami.instance_name + '/images/Chart.jpg'" />
-                </div>
-                <div>
-                    <t-container is-justify-between is-full-width class="pb-5">
-                        <div class="text-base font-medium text-[#211F47] leading-6">Mean time to resolve</div>
-                    </t-container>
-                    <img :src="'/static/' + whoami.instance_name + '/images/Chart 2.jpg'" />
-                </div>
-            </t-grids>
+        <div v-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1">
+            <TURL :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'" 
+                :additionalUrlParams="{'last_disappeared_start': filters?.issue_summary_start, 'last_disappeared_end': filters?.issue_summary_end, 'issue_status': 'Open%257CResolved'}"
+                :includeUrlStyle="false"
+                :includeContextParam="false" >
+              <t-big-number label="RESOLVED" t-layer="big_num_resolved_issues" t-value-column="RESOLVED_VULN_C" t-previous-column="RESOLVED_VULN_P" numberTextColor="#145DEB"/>
+            </TURL>
+        </div> 
+        <div v-else-if= "whoami && whoami.custom_attributes.snyk_user_reports_org_ids.length == 1"> -->
+            <t-big-number label="TOTAL RESOLVED" t-layer="big_num_resolved_issues" t-value-column="RESOLVED_VULN_C" t-previous-column="RESOLVED_VULN_P" :number-format-limit="99999">
+              <div slot="tooltip" class="text-sm leading-[18px] font-normal break-normal">
+                The number of issues resolved during the date range selected.
+              </div>
+            </t-big-number>
+        <!-- </div> -->
+        <t-big-number label="MEAN TIME TO RESOLVE" t-layer="big_num_mtr" t-value-column="MTR_C" t-previous-column="MTR_P" value-text="days" tooltip-width="190px" :number-format-limit="99999">
+          <div slot="tooltip" class="text-sm leading-[18px] font-normal break-normal">
+            For issues resolved during the date range selected, the mean time from when the issue was identified until it was resolved.
+          </div>
+        </t-big-number>
+      <!-- </t-grids> -->
+      </div>
+
+      <div class="flex flex-col">
+        <span class="text-base font-bold p-2.5 flex gap-1 items-center">
+          Issues Identified and Resolved
+          <t-tooltip width="260px">
+            <help-circle-outline-icon slot="trigger" :size="16" />
+            <div class="text-sm leading-[18px] font-normal">
+              This chart shows a burn up of issues identified and resolved. The space between the two lines represents the number of open issues over time.
+            </div>
+          </t-tooltip>
+        </span>
+        <exec_line_chart t-layer="line_identified_resolved" borderless />
+      </div>
+
+      <t-grids column-count="2">
+        <div class="flex flex-col">
+          <span class="text-base font-bold p-2.5 flex gap-1 items-center">
+            Exposure Window
+            <t-tooltip width="260px">
+              <help-circle-outline-icon slot="trigger" :size="16" />
+              <div class="text-sm leading-[18px] font-normal">
+                This chart shows the number of issues in each age bracket (how long have they been open) on each day. Each data point represents the count of open issues as of that date per bracket.
+              </div>
+            </t-tooltip>
+          </span>
+          <exec_line_chart t-layer="line_exposure_window" borderless />
+        </div>
+        
+        <div class="flex flex-col">
+          <span class="text-base font-bold p-2.5 flex gap-1 items-center">
+            Time to Resolve by Week
+            <t-tooltip width="260px">
+              <help-circle-outline-icon slot="trigger" :size="16" />
+              <div class="text-sm leading-[18px] font-normal">
+                This chart shows the number of issues in brackets according to how long they took to resolve. Each data point represents the count of issues closed that week per bracket.
+              </div>
+            </t-tooltip>
+          </span>
+          <exec_line_chart t-layer="line_mtr" borderless />
+        </div>
+      </t-grids>
+
+
+      <!-- <t-container class="flex flex-wrap justify-between pt-10" gap-y="2">
+        <h2 class="text-xl font-normal">Top sources of risk</h2>
+        <t-container gap-x="2" gap-y="2" class="flex-wrap">
+          <t-csv-export t-layer="issue_table" />
         </t-container>
-        <!-- End Grid Chart -->
+		  </t-container> -->
 
-        <t-container is-justify-between is-full-width class="pb-5">
-            <div class="text-xl	font-normal">Top sources of risk</div>
-            <t-container>
-                <t-csv-export t-layer="issue_table" />
-            </t-container>
-        </t-container>
+    <t-table
+      v-show="whoami && whoami.custom_attributes?.snyk_user_reports_group_ids?.length !== 1"
+      title="Risk Breakdown"
+      t-layer="table_project"
+      full_width
+      :can-search="false"
+      :is-header-fixed="true"
+      :can-sort="false"
+      :canPageServer="true"
+      :layerColumnsToHide="['ORG_DISPLAY_NAME', 'PROJECT_ID', 'OPEN_P','NEW_P','RESOLVED_P','MTR_P', 'ORG_NAME']"
+      style="color: black; padding-top: 10px"
+      tooltip="This shows the breakdown of key metrics above per Organization if viewed at the Group-level or per Project if viewed at the Organization-level."
+    >
+      <t-column header="PROJECT NAME" id-or-name="PROJECT_NAME">
+        {{value}}
+      </t-column>
+      <t-column header="OPEN ISSUES" id-or-name="OPEN_C">
+          <CurrentAndPast :current="value" :past="row.OPEN_P.value"/>
+      </t-column>
+      <t-column header="NEW ISSUES" id-or-name="NEW_C">
+		<TURL :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
+            :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_ID.value, 'last_introduced_start': filters?.issue_summary_start, 'last_introduced_end': filters?.issue_summary_end, 'last_introduced_range_preset': filters?.range_preset, 'issue_status': 'Open%257CResolved' }" 
+            :includeUrlStyle="false"
+            :includeContextParam="true"
+             t-layer="selected_org">
+        	<CurrentAndPast :current="value" :past="row.NEW_P.value" style="color: #145DEB"  />
+        </TURL>
+      </t-column>
+      <t-column header="RESOLVED ISSUES" id-or-name="RESOLVED_C">
+        <TURL :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
+            :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_ID.value,'last_disappeared_start': filters?.issue_summary_start, 'last_disappeared_end': filters?.issue_summary_end, 'last_disappeared_range_preset': filters?.range_preset, 'issue_status': 'Open%257CResolved' }" 
+            :includeUrlStyle="false"
+            :includeContextParam="true"
+             t-layer="selected_org">
+          <CurrentAndPast :current="value" :past="row.RESOLVED_P.value" style="color: #145DEB" />
+        </TURL>
+      </t-column>
+      <t-column header="MEAN TIME TO RESOLVE" id-or-name="MTR_C">
+        <CurrentAndPast :current="value" :past="row.MTR_P.value" unit="d" />
+      </t-column>
+    </t-table>
 
-        <!-- Layers Start -->
-        <t-sources-risk-table />
-        <!-- Layers End -->
-    </executive-summary>
-</template>
+    <t-table
+      v-show="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1"
+      title="Risk Breakdown"
+      t-layer="table_org"
+      full_width
+      :can-search="false"
+      :is-header-fixed="true"
+      :can-sort="false"
+      :canPageServer="true"
+      :layerColumnsToHide="['ORG_PUBLIC_ID', 'OPEN_P','NEW_P','RESOLVED_P','MTR_P','ORG_NAME']"
+      style="color: black; padding-top: 10px"
+      tooltip="This shows the breakdown of key metrics above per Organization if viewed at the Group-level or per Project if viewed at the Organization-level."
+    >
+      <t-column header="ORGANIZATION NAME" id-or-name="ORG_DISPLAY_NAME">
+        {{value}}
+      </t-column>
+      <t-column header="OPEN ISSUES" id-or-name="OPEN_C">
+        <CurrentAndPast :current="value" :past="row?.OPEN_P?.value" />
+      </t-column>
+      <t-column header="NEW ISSUES" id-or-name="NEW_C">
+		    <TURL :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'" 
+            :additionalUrlParams="{'context[page]': 'issues-detail', 'orgs': row.ORG_PUBLIC_ID.value, 'last_introduced_start': filters?.issue_summary_start, 'last_introduced_end': filters?.issue_summary_end, 'last_introduced_range_preset': filters?.range_preset, 'issue_status': 'Open%257CResolved' }" 
+            :includeUrlStyle="false">
+        	<CurrentAndPast :current="value" :past="row.NEW_P.value" style="color: #145DEB" />
+        </TURL>
+      </t-column>
+      <t-column header="RESOLVED ISSUES" id-or-name="RESOLVED_C">
+		    <TURL :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'"
+            :additionalUrlParams="{'context[page]': 'issues-detail', 'orgs': row.ORG_PUBLIC_ID.value, 'last_disappeared_start': filters?.issue_summary_start, 'last_disappeared_end': filters?.issue_summary_end, 'last_disappeared_range_preset': filters?.range_preset, 'issue_status': 'Open%257CResolved' }" 
+            :includeUrlStyle="false">
+            <CurrentAndPast :current="value" :past="row?.RESOLVED_P?.value" style="color: #145DEB" />
+        </TURL>
+      </t-column>
+      <t-column header="MEAN TIME TO RESOLVE" id-or-name="MTR_C">
+        <CurrentAndPast :current="value" :past="row?.MTR_P?.value" unit="d" />
+      </t-column>
+    </t-table>
+    </report>
+  </template>

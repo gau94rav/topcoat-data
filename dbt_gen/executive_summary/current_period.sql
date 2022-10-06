@@ -2,7 +2,7 @@ with open as ( -- this is wrong..
   select
   date_trunc('DAY',to_date(LAST_INTRODUCED)) as last_introduced,
   count(concat(problem_id,package,version,project_id)) as open_vuln_c
-  from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+  from "REPORTING"."MIGRATED_MARTS"."ISSUES"
   where 1=1
   --date filter?
   and is_currently_present = 'True'
@@ -15,7 +15,7 @@ new as (
   SELECT
   date_trunc('DAY',to_date(LAST_INTRODUCED)) as last_introduced, -- rolling? fill in missing dates?
   count(concat(problem_id,package,version,project_id)) as new_vuln_c
-  from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+  from "REPORTING"."MIGRATED_MARTS"."ISSUES"
   where date_trunc('DAY',LAST_INTRODUCED) <= current_date() --start
   and date_trunc('DAY',LAST_INTRODUCED) >= dateadd('DAY',-7,current_date()) --end
   and is_currently_present = 'True'
@@ -28,7 +28,7 @@ resolved as (
   SELECT
   date_trunc('DAY',to_date(last_disappeared)) as disappeared,
   count(concat(problem_id,package,version,project_id)) as resolved_vuln_c
-  from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+  from "REPORTING"."MIGRATED_MARTS"."ISSUES"
   where date_trunc('DAY',to_date(last_disappeared)) <= current_date() --start
   and date_trunc('DAY',to_date(last_disappeared)) >= dateadd('DAY',-7,current_date()) --end
   and is_currently_present = 'False'
@@ -45,7 +45,7 @@ mtr as (
   date_trunc('DAY',LAST_INTRODUCED)
    )) as days_to_disappear,
   count(concat(problem_id,package,version,project_id)) as mtr_vuln_c
-  from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+  from "REPORTING"."MIGRATED_MARTS"."ISSUES"
   where date_trunc('DAY',to_date(last_disappeared)) <= current_date() --start
   and date_trunc('DAY',to_date(last_disappeared)) >= dateadd('DAY',-7,current_date()) --end
   and is_currently_present = 'False'

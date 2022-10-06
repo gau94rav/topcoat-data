@@ -1,13 +1,15 @@
 SELECT
-  count( case when 
-    (date_trunc('DAY',to_date(last_disappeared)) <= current_date() --start
-  and date_trunc('DAY',to_date(last_disappeared)) >= dateadd('DAY',-7,current_date())) --end
-  then concat(problem_id,project_id) else null end) as resolved_vuln_c,
-count( case when 
-    (date_trunc('DAY',to_date(last_disappeared)) <= dateadd('DAY',-7,current_date()) --start
-    and date_trunc('DAY',to_date(last_disappeared)) >= dateadd('DAY',-14,current_date())) --end
-  then concat(problem_id,project_id) else null end) as resolved_vuln_p
 
-from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+  count( case when 
+    (to_date(last_disappeared) <= '{{ filter('issue_summary_end') }}'
+  and to_date(last_disappeared) >= '{{ filter('issue_summary_start') }}')
+  then grouped_by_key else null end) as resolved_vuln_c,
+count( case when 
+    (to_date(last_disappeared) 
+    <= DATEADD(DAY, (DATEDIFF(day,'{{ filter('issue_summary_end') }}','{{ filter('issue_summary_start') }}'))-1, '{{ filter('issue_summary_end') }}')
+    and to_date(last_disappeared) 
+    >= DATEADD(DAY, (DATEDIFF(day,'{{ filter('issue_summary_end') }}','{{ filter('issue_summary_start') }}'))-1, '{{ filter('issue_summary_start') }}'))
+  then grouped_by_key else null end) as resolved_vuln_p
+
+from {{ref('seed_executive_summary')}}
   where 1=1
-  and org_public_id = '4a3d29ab-6612-481b-83f2-aea6cf421ea5'

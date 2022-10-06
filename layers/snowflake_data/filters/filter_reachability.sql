@@ -2,7 +2,7 @@
  
 select reachability
 
-from "DATA_PRODUCTS"."PROD_MARTS"."DIM_REACHABILITY"
+from "REPORTING"."MIGRATED_MARTS"."DIM_REACHABILITY"
 
 
 {{ column(

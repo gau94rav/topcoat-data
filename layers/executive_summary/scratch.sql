@@ -18,7 +18,7 @@
 --date_trunc('DAY',LAST_INTRODUCED) as last,
 date_trunc('DAY',to_date(last_disappeared)) as disappeared,
 count(concat(problem_id,package,version,project_id)) as unique_vuln
-from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+from "REPORTING"."MIGRATED_MARTS"."ISSUES"
 
 where org_public_id = '4c62f811-1816-4896-a91d-22577bb8eaca'
 group by 1
@@ -27,7 +27,7 @@ order by 1 desc */
 /*SELECT
   date_trunc('DAY',LAST_INTRODUCED) as last_introduced,
   count(concat(problem_id,project_id)) as new_vuln_c
-  from "DATA_PRODUCTS"."PROD_MARTS"."ISSUES"
+  from "REPORTING"."MIGRATED_MARTS"."ISSUES"
   where date_trunc('DAY',LAST_INTRODUCED) <= current_date() --start
   and date_trunc('DAY',LAST_INTRODUCED) >= dateadd('DAY',-7,current_date()) --end
   and coalesce(last_disappeared,'1980-01-1 00:00:00.000 +0000') < dateadd('DAY',-7,current_date()) --end

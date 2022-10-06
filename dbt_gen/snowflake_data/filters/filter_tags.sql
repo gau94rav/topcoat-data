@@ -1,7 +1,7 @@
 SELECT distinct
 value,
        key
-FROM  "DATA_PRODUCTS"."PROD_MARTS"."DIM_PROJECT_TAGS"
+FROM  "REPORTING"."MIGRATED_MARTS"."DIM_PROJECT_TAGS"
 where  (group_public_id IN ('group_id') OR org_public_id IN ('org_id')) 
 
 

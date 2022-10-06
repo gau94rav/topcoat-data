@@ -3,8 +3,8 @@
 SELECT 
 KEY,
 VALUE 
-FROM   "DATA_PRODUCTS"."PROD_MARTS"."DIM_CRITICALITY"
-order by SORT_COLUMN
+FROM   "REPORTING"."MIGRATED_MARTS"."DIM_CRITICALITY"
+order by SORT_COLUMN desc
 {{ column(
    name='KEY',
    tags=['keys']

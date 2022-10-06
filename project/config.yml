@@ -37,7 +37,7 @@ modules:
 
 layers:
   personas: [ 'default' ]
-  connection: snowflake
+  connection: reporting
 
   ncaa:
     connection: tcbq
@@ -52,11 +52,13 @@ personas:
           src: issues_detail.html
           title: Issues Detail
           icon_class: fa-chart-bar
+          pdf_template: issues_pdf_template
 
-        # - url: executive_summary
-        #   src: executive_summary.html
-        #   title: Executive Summary
-        #   icon_class: fa-chart-bar
+        - url: issues-summary
+          src: executive_summary.html
+          title: Issues Summary
+          icon_class: fa-chart-bar
+          pdf_template: executive_pdf_template
 
         # - url: report-executive-summary
         #   src: report_executive_summary.html
@@ -107,3 +109,5 @@ develop:
       season: '2015'
       year: '2020'
       orgs: '4c62f811-1816-4896-a91d-22577bb8eaca'
+      issue_summary_end: '2022-09-16'
+      issue_summary_start: '2022-08-15'
