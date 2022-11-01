@@ -52,18 +52,20 @@ personas:
           src: issues_detail.html
           title: Issues Detail
           icon_class: fa-chart-bar
-          pdf_template: issues_pdf_template
+          pdf_template: issues_detail_pdf_template
 
         - url: issues-summary
-          src: executive_summary.html
+          src: issues_summary.html
           title: Issues Summary
           icon_class: fa-chart-bar
-          pdf_template: executive_pdf_template
+          pdf_template: issues_summary_pdf_template
 
-        # - url: report-executive-summary
-        #   src: report_executive_summary.html
-        #   title: Rpt Executive Summary
-        #   icon_class: fa-chart-bar
+        - url: vuln-detail
+          src: vuln_detail.html
+          title: Vulnerabilities Detail
+          icon_class: fa-chart-bar
+          pdf_template: vulnerabilities_pdf_template
+
           
         # - url: summary2
         #   src: summary2.html

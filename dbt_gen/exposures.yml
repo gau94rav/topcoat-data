@@ -17,7 +17,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('all_product_numbers')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: all_severity_issues_auto_page
     type: 'dashboard'
@@ -26,7 +26,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('all_severity_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: closed_issues_auto_page
     type: 'dashboard'
@@ -35,7 +35,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('closed_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: code_issues_auto_page
     type: 'dashboard'
@@ -44,7 +44,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('code_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: code_vuln_issues_auto_page
     type: 'dashboard'
@@ -53,7 +53,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('code_vuln_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: combined_layer_auto_page
     type: 'dashboard'
@@ -78,7 +78,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('configuration_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: container_issues_auto_page
     type: 'dashboard'
@@ -87,7 +87,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('container_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: critical_issues_auto_page
     type: 'dashboard'
@@ -96,7 +96,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('critical_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: current_period_auto_page
     type: 'dashboard'
@@ -113,7 +113,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('distinct_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: executive_summary
     type: 'dashboard'
@@ -347,7 +347,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('high_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: high_license_auto_page
     type: 'dashboard'
@@ -356,7 +356,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('high_license')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: iac_issues_auto_page
     type: 'dashboard'
@@ -365,7 +365,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('iac_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: issue_auto_page
     type: 'dashboard'
@@ -449,7 +449,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('license_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: low_issues_auto_page
     type: 'dashboard'
@@ -458,7 +458,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('low_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: low_license_auto_page
     type: 'dashboard'
@@ -467,7 +467,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('low_license')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: m_filter_autofixable_auto_page
     type: 'dashboard'
@@ -604,7 +604,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('medium_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: medium_license_auto_page
     type: 'dashboard'
@@ -613,7 +613,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('medium_license')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: new_test_auto_page
     type: 'dashboard'
@@ -638,7 +638,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('open_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: open_source_issues_auto_page
     type: 'dashboard'
@@ -647,7 +647,7 @@ exposures:
         email: generated@topcoatdata.com
     depends_on:
       - ref('open_source_issues')
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
   - name: previous_period_auto_page
     type: 'dashboard'
@@ -721,29 +721,29 @@ exposures:
     depends_on:
       - ref('search')
 
-  - name: seed_filtered_ungrouped_issues_auto_page
+  - name: base_issues_detail_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/seed_filtered_ungrouped_issues
+    url: https://snyk-insights.topcoatdata.app//layers/base_issues_detail
     owner: 
         email: generated@topcoatdata.com
     depends_on:
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
 
-  - name: seed_grouped_issues_auto_page
+  - name: table_vuln_detail_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/seed_grouped_issues
+    url: https://snyk-insights.topcoatdata.app//layers/table_vuln_detail
     owner: 
         email: generated@topcoatdata.com
     depends_on:
-      - ref('seed_grouped_issues')
+      - ref('table_vuln_detail')
 
-  - name: seed_projects_auto_page
+  - name: table_projects_auto_page
     type: 'dashboard'
-    url: https://snyk-insights.topcoatdata.app//layers/seed_projects
+    url: https://snyk-insights.topcoatdata.app//layers/table_projects
     owner: 
         email: generated@topcoatdata.com
     depends_on:
-      - ref('seed_projects')
+      - ref('table_projects')
 
   - name: seed_ungrouped_issues_auto_page
     type: 'dashboard'
@@ -759,7 +759,7 @@ exposures:
     owner: 
         email: generated@topcoatdata.com
     depends_on:
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
       - ref('selected_group')
 
   - name: selected_org_auto_page
@@ -768,7 +768,7 @@ exposures:
     owner: 
         email: generated@topcoatdata.com
     depends_on:
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
       - ref('selected_org')
 
   - name: summary2
@@ -809,7 +809,7 @@ exposures:
     owner: 
         email: generated@topcoatdata.com
     depends_on:
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
       - ref('total_issues')
 
   - name: value_filter_layer_type_auto_page
@@ -826,6 +826,6 @@ exposures:
     owner: 
         email: generated@topcoatdata.com
     depends_on:
-      - ref('seed_filtered_ungrouped_issues')
+      - ref('base_issues_detail')
       - ref('vuln_issues')
 

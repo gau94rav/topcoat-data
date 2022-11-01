@@ -1,6 +1,6 @@
 SELECT 
 count(*) as value
-from {{ ref('seed_filtered_ungrouped_issues') }} i
+from {{ ref('base_issues_detail') }} i
 where 1=1
 and issue_severity = 'low'
 and issue_type = 'License'

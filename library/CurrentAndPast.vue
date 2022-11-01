@@ -1,8 +1,22 @@
 <template>
     <div class="displayFlex" >
-        <span class="currentNumber">{{ format(current) }}{{ unit }}</span>
-          {{ format(past) }}{{ unit }}
-          <TrendArrow :firstNumber="current" :secondNumber="past" class="trendIcon" />
+        <span class="currentNumber">
+            <span v-if="current && current !=='0'">
+                {{ format(current) }}{{ unit }}
+            </span>
+            <span v-else>
+                {{zeroDisplay}}
+            </span>
+        </span>
+        <span class="pastNumber">
+            <span v-if="past && past !=='0'">
+                {{ format(past) }}{{ unit }}
+            </span>
+            <span v-else>
+                {{zeroDisplay}}
+            </span>
+        </span>
+        <TrendArrow :firstNumber="current" :secondNumber="past" class="trendIcon" />
     </div>
 </template>
 
@@ -21,6 +35,10 @@ export default {
     unit: {
       type: String,
       default: ''
+    },
+    zeroDisplay: {
+      type: String,
+      default: '0'
     }
   },
   data: () => ({}),
@@ -50,5 +68,9 @@ export default {
 
     .trendIcon{
       padding-left: 7px;
+    }
+
+    .pastNumber{
+        color: black;
     }
 </style>

@@ -6,7 +6,7 @@ SELECt
     COUNT(*) AS total,
     COUNT(distinct problem_id) AS total_unique
 FROM
-   {{ ref('seed_filtered_ungrouped_issues') }}
+   {{ ref('base_issues_detail') }}
 WHERE
     1=1
 

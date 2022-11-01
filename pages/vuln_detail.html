@@ -1,0 +1,227 @@
+<template>
+	<report class="max-w-[1440px] relative left-0 right-0 m-auto">
+
+		<!-- Filters Left Start -->
+        <div slot="filters" class="flex justify-between w-full">
+            <t-container gap-x="2">
+
+                <t-navigation-dropdown label="Select Report Name" />
+
+                <div class="w-[1px] md:relative absolute hidden md:block left-1 bg-[#D3D3D9] h-[28px]"></div>
+            
+                <div v-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length > 1">
+                <!-- only in dev in Topcoat--> 
+                    <t-select t-layer="filter_group" t-filter:dropdown="groups" label="Groups" item-label="Groups" />
+                    <t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs"
+                    label="Organizations" />
+                </div> 
+                <div v-else-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1">
+                <!-- iframe: selected a group so it should only be org --> 
+                    <t-multi-selector is-searchable t-layer="filter_orgs" t-filter:selected_items="orgs"
+                    label="Organizations" />
+                </div> 
+                <div v-else >
+                <!-- iframe: no filter because they picked one org --> 
+                </div>
+
+                <t-multi-selector t-layer="filter_product_name" t-filter:selected_items="product_name" label="Snyk Product" />
+
+                <t-filter-group label="More Filters" max-height="400px">
+                    <t-tags-input is-single-tag t-layer='filter_cve' item-label="CVE" t-filter:selected_items="cve" :is-label-capitalized="true" /> 
+                    <t-tags-input is-single-tag t-layer='filter_cwe' item-label="CWE" t-filter:selected_items="cwe" :is-label-capitalized="true" />  
+                    <t-multi-selector is-expanded t-layer="filter_exploit_maturity" t-filter:selected_items="exploit_maturity" item-label="Exploit Maturity" />
+                    <t-date-picker t-layer="filter_calendar_introduced" t-filter:start_date="introduced_start" t-filter:end_date="introduced_end" t-filter:date_preset="introduced_range_preset" date-format="YYYY-MM-DD" item-label="Introduced Date" />
+                    <t-multi-selector is-expanded t-layer="filter_autofixable" t-filter:selected_items="autofixable" item-label="Is Auto Fixable" /> 
+                    <t-multi-selector is-expanded t-layer="filter_issue_severity" t-filter:selected_items="issue_severity" item-label="Issue Severity" />
+                    <t-multi-selector is-expanded default-value="Open" t-layer="filter_issue_status" t-filter:selected_items="issue_status" item-label="Issue Status" />
+                    <t-multi-selector is-expanded t-layer="filter_issue_type" t-filter:selected_items="issue_type" item-label="Issue Type" />
+                    <t-date-picker t-layer="filter_calendar_last_ignored" t-filter:start_date="last_ignored_start" t-filter:end_date="last_ignored_end" t-filter:date_preset="last_ignored_range_preset" date-format="YYYY-MM-DD" item-label="Last Ignored Date" />
+                    <t-date-picker t-layer="filter_calendar_last_introduced" t-filter:start_date="last_introduced_start" t-filter:end_date="last_introduced_end" t-filter:date_preset="last_introduced_range_preset" date-format="YYYY-MM-DD" item-label="Last Introduced Date" />
+                    <t-date-picker t-layer="filter_calendar_last_disappeared" t-filter:start_date="last_disappeared_start" t-filter:end_date="last_disappeared_end" t-filter:date_preset="last_disappeared_range_preset" date-format="YYYY-MM-DD" item-label="Last Resolved Date" />
+                    <t-multi-selector is-expanded t-layer="filter_package_name" t-filter:selected_items="package_name" item-label="Package Name" is-searchable />
+                    <t-multi-selector is-expanded t-layer="filter_package_version" t-filter:selected_items="package_version" item-label="Package Version" is-searchable />
+                    <t-range-input t-layer="filter_priority_score" t-filter:min="min" t-filter:max="max" t-min-column="MIN" t-max-column="MAX" item-label="Priority Score" />
+                    <t-tags-input is-single-tag t-layer='filter_project_criticality' item-label="Project Criticality" t-filter:selected_items="criticality" :is-label-capitalized="true" />
+                    <t-tags-input is-single-tag t-layer='filter_project_environment' item-label="Project Environment" t-filter:selected_items="environment" :is-label-capitalized="true" /> 
+                    <t-tags-input is-single-tag t-layer='filter_project_lifecycle' item-label="Project Lifecycle" t-filter:selected_items="lifecycle" :is-label-capitalized="true" /> 
+                    <t-multi-selector is-expanded t-layer="filter_problem_id" t-filter:selected_items="problem_id" item-label="Problem Id" is-searchable />
+                    <t-multi-selector is-expanded t-layer="filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" is-searchable />
+                    <t-multi-selector is-expanded t-layer="filter_project_origin" t-filter:selected_items="project_origin" item-label="Project Origin" />
+                    <t-multi-selector is-expanded t-layer="filter_project_owner" t-filter:selected_items="project_owner" item-label="Project Owner" is-searchable />
+                    <t-tags-input t-layer='filter_tags' item-label="Project Tags" t-filter:selected_items="tags" :is-label-capitalized="true" />
+                    <t-multi-selector is-expanded t-layer="filter_project_type" t-filter:selected_items="project_type" item-label="Project Type" />
+                </t-filter-group>
+            </t-container>
+		    <!-- Filters Left End -->
+
+		    <!-- Filters Right Start -->
+            <t-container gap-x="2">
+                <t-pdf :options="{ paperWidth: 20, paperHeight: 11.5 }" />
+                <t-url-copy-button />
+            </t-container>
+        </div>
+		<!-- Filters Right End -->
+
+		<!-- Mid Section Start -->
+		<div slot="mid" class="pb-5 md:grid md:grid-cols-3 flex justify-between w-full">
+			<div class="base-heading text-xl font-normal text-[#211F47] leading-6 w-full">
+                <div v-if="whoami && whoami.custom_attributes.snyk_user_reports_group_ids.length == 1">
+                            
+                             <group-name t-filter:param="groups" t-layer="selected_group" />
+                           
+                        </div> 
+                        <div v-else-if= "whoami && whoami.custom_attributes.snyk_user_reports_org_ids.length == 1">
+                            
+                              <org-name t-filter:param="groups" t-layer="selected_org" />
+                              
+                        </div>
+				<!-- <group-name t-filter:param="groups" t-layer="selected_group" /> -->
+			</div>
+			<t-container gap-x="2" class="w-full md:col-span-2">
+				<span  class="base-heading text-xl font-normal text-[#211F47] leading-6">Vulnerabilities By</span>
+				<t-select t-layer="vuln_issues_by" t-filter:dropdown="vulnerabilities_by" label="Vulnerabilities By" item-label="vulnerabilities_by" default-value="Issue Type" />
+			</t-container>	
+		</div>
+        <!-- 20220923 ToDo: point to correct layers for big numbers  -->
+        <div class="grid md:grid-cols-3 gap-1" slot="mid">
+            <t-vis-grouper t-layer="big_num_issue_totals" t-class="grid grid-cols-2 gap-1 w-full">
+                <t-big-number label="UNIQUE VULNS" big-number-size="big" t-value-column="TOTAL_UNIQUE" height="108" :number-format-limit="9999"/>
+                <t-big-number label="TOTAL ISSUES" big-number-size="big" t-value-column="TOTAL" height="108" :number-format-limit="9999"/>
+            </t-vis-grouper>
+            <t-container class="md:col-span-2">
+                <t-vis-grouper
+                    v-if="filters && filters.vulnerabilities_by === 'Product Name'"
+                    t-layer="vuln_big_num_product_name"
+                    key='product'
+                    t-class="grid grid-cols-2 md:grid-cols-4 gap-1 gap-x-1 w-full"
+                >
+                    <t-big-number label="CODE" big-number-size="small" bg-color="#F9F9FA" t-value-column="SNYK_CODE" height="108" :number-format-limit="99999"/>
+                    <t-big-number label="CONTAINER" big-number-size="small" bg-color="#F9F9FA" t-value-column="SNYK_CONTAINER" height="108" :number-format-limit="99999"/>
+                    <t-big-number label="IAC" big-number-size="small" bg-color="#F9F9FA" t-value-column="SNYK_IAC" height="108" :number-format-limit="99999"/>
+                    <t-big-number label="OPEN SOURCE" big-number-size="small" bg-color="#F9F9FA" t-value-column="SNYK_OPEN_SOURCE" height="108" :number-format-limit="99999"/>      
+                </t-vis-grouper>
+                <t-vis-grouper
+                    v-else-if="filters && filters.vulnerabilities_by === 'Issue Type'"
+                    t-layer="vuln_big_num_issue_types"
+                    key='issue_type'
+                    t-class="grid grid-cols-2 md:grid-cols-3 gap-1 gap-x-1 w-full"
+                >
+                    <t-big-number label="VULNERABILITY" big-number-size="small" bg-color="#F9F9FA" t-value-column="VULNERABILITY" height="108" :number-format-limit="99999"/>
+                    <t-big-number label="CONFIGURATION" big-number-size="small" bg-color="#F9F9FA" t-value-column="CONFIGURATION" height="108" :number-format-limit="99999"/>
+                    <t-big-number label="LICENSE" big-number-size="small" bg-color="#F9F9FA" t-value-column="LICENSE" height="108" :number-format-limit="99999"/>    
+                </t-vis-grouper>
+            </t-container>
+        </div>
+
+        <!-- START ISSUES TABLES -->
+        <TTable 
+            title="Vulnerability details"
+            t-layer="table_vuln_detail" 
+            :can-search="false" 
+            :is-header-fixed="true" 
+            sort="sql"
+            :excludeFromSort="['ISSUE_SEVERITY']"
+            canCollapseDetailRows
+            canPageServer
+            :layerColumnsToHide="[ 'ISSUE_TYPE', 'AUTOFIXABLE', 'PROJECT_TYPE','INITIAL_ISSUE_TYPE','VULN_DB_URL','PROBLEM_ID']"
+        >
+            <template v-slot:detail_row_slot="row">
+                <TTable 
+                    :enableCsvDownload="false"
+                    t-layer="table_projects" 
+                    :can-search="false" 
+                    canPageServer
+                    :filters="{ 'issue_id': row.PROBLEM_ID.value }"
+                    :layerColumnsToHide="['PROJECT_ID', 'ORG_PUBLIC_ID', 'PROJECT_TYPE','PROJECT_URL', 'GROUP_PUBLIC_ID', 'PROBLEM_ID','ISSUE_URL']"
+                    :is-header-fixed="true" 
+                    :rowsPerPage="10"
+                >
+                <t-column header="PROJECT" id-or-name="PROJECT_NAME" >
+                        <span>
+                            <TUrl :url="row.PROJECT_URL.value" :includeFilterParams="false" target="_blank">
+                                {{rendered_value}}
+                            </TUrl>
+                        </span>
+                        <p>
+                            {{row.PROJECT_TYPE.value}}
+                        </p>
+                    </t-column> 
+                    <t-column header="ISSUE" id-or-name="PROBLEM_TITLE" >
+                        <span class="text-sm font-medium leading-[15px] tracking-[0.1px]">
+                    <TUrl :url="row.ISSUE_URL.value" :includeFilterParams="false"  target="_blank"> {{rendered_value}} </TUrl>
+                    </span>
+                    <div class="text-[#145DEB] text-sm font-small leading-[15px] tracking-[0.1px]">{{row.PROBLEM_ID.value}}</div>
+                    </t-column>
+                    <t-column header="AUTO FIXABLE" id-or-name="AUTOFIXABLE">
+                        <span v-if="value !== 'No' && value !== null" class="flex text-sm text-normal text-[#727184] leading-[17px]">
+                            <i class="fas fa-check-circle text-[#2D9283] mr-[6px]"></i> {{value}}
+                        </span>
+                        <span v-else class="flex text-sm text-normal text-[#727184] leading-[17px]">
+                            <div>{{ value }}</div>
+                        </span>
+                    </t-column>
+                    <t-column header="INTRODUCED" id-or-name="FIRST_INTRODUCED">
+                        <date-formatter :date="value" /> 
+                    </t-column> 
+                    <t-column header="STATUS" id-or-name="ISSUE_STATE">
+                            <open-or-fixed :isOpen="value" />
+                    </t-column>
+                </TTable>
+     <!-- Main Table -->           
+            </template>
+            <t-column header=" " id-or-name="ISSUE_SEVERITY">
+                <IssueSeverityIcon :severity="value" />
+            </t-column>
+            <t-column header="SCORE" id-or-name="PRIORITY_SCORE">
+                {{ parseInt(rendered_value, 10) }}
+            </t-column>
+            <t-column header="ISSUE" id-or-name="PROBLEM_TITLE" >
+                <div class="text-[#145DEB] text-sm font-medium leading-[15px] tracking-[0.1px]">{{row.ISSUE_TYPE.value}}</div>
+                 <span v-if="row.INITIAL_ISSUE_TYPE.value == 'PACKAGE_VULNERABILITY'">
+    				      <TUrl :url="row.VULN_DB_URL.value" :includeFilterParams="false" target="_blank"> {{rendered_value}} </TUrl>
+				        </span> 
+				<span v-else>
+					{{rendered_value}}
+				</span>
+                
+            </t-column> 
+            <t-column header="CVE" id-or-name="CVE">
+                <div class="text-[#145DEB] text-sm font-normal">
+                    <span v-for=="CVE in JSON.parse(value)">
+                        <TUrl :url="'https://www.cve.org/CVERecord?id='+CVE" :includeFilterParams="false"> {{ CVE }} </TUrl>
+                    </span>
+                </div>
+            </t-column>
+            <t-column header="CWE" id-or-name="CWE">
+                <div class="text-[#145DEB] text-sm font-normal">
+                    <span v-for=="CWE in JSON.parse(value)">
+                        <TUrl :url="'https://cwe.mitre.org/data/definitions/'+CWE.replace('CWE-', '')"
+                            :includeFilterParams="false"> {{ CWE }} </TUrl>
+                    </span>
+                </div>
+            </t-column>
+            <t-column header="EXPLOIT MATURITY" id-or-name="EXPLOIT_MATURITY">
+                <span v-if="rendered_value">
+                    {{ rendered_value.split('-').map((w) => _.capitalize(w)).join(' ') }}
+                </span>
+            </t-column>
+            <t-column header="SNYK PRODUCT" id-or-name="PRODUCT_NAME" />
+            <t-column header="PROJECTS" id-or-name="PROJECT_COUNT">
+                <span>
+                    {{ rendered_value }}
+                </span>
+            </t-column>
+            <t-column header="ISSUE COUNT" id-or-name="ISSUE_COUNT">
+                <TURL 
+                  :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'" 
+                  :additionalUrlParams="{'context[page]': 'issues-detail', 'problem_id': row.PROBLEM_ID.value }" 
+                  :includeUrlStyle="false"
+                >
+                  <span class="text-[#145DEB]">
+                    {{ rendered_value }}
+                  </span>
+                </TURL>
+            </t-column>
+        </TTable>
+    </report>
+</template>

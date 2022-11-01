@@ -24,27 +24,32 @@
                 <!-- iframe: no filter because they picked one org --> 
                 </div>
 
-                <t-multi-selector t-layer="filter_product_name" t-filter:selected_items="product_name" label="Products" />
+                <t-multi-selector t-layer="filter_product_name" t-filter:selected_items="product_name" label="Snyk Product" />
 
                 <t-filter-group label="More Filters" max-height="400px">
-                    <t-multi-selector is-expanded t-layer="filter_autofixable" t-filter:selected_items="autofixable" item-label="Auto Fixable" /> 
                     <t-tags-input is-single-tag t-layer='filter_cve' item-label="CVE" t-filter:selected_items="cve" :is-label-capitalized="true" /> 
                     <t-tags-input is-single-tag t-layer='filter_cwe' item-label="CWE" t-filter:selected_items="cwe" :is-label-capitalized="true" />  
                     <t-multi-selector is-expanded t-layer="filter_exploit_maturity" t-filter:selected_items="exploit_maturity" item-label="Exploit Maturity" />
                     <t-date-picker t-layer="filter_calendar_introduced" t-filter:start_date="introduced_start" t-filter:end_date="introduced_end" t-filter:date_preset="introduced_range_preset" date-format="YYYY-MM-DD" item-label="Introduced Date" />
+                    <t-multi-selector is-expanded t-layer="filter_autofixable" t-filter:selected_items="autofixable" item-label="Is Auto Fixable" /> 
                     <t-multi-selector is-expanded t-layer="filter_issue_severity" t-filter:selected_items="issue_severity" item-label="Issue Severity" />
                     <t-multi-selector is-expanded default-value="Open" t-layer="filter_issue_status" t-filter:selected_items="issue_status" item-label="Issue Status" />
                     <t-multi-selector is-expanded t-layer="filter_issue_type" t-filter:selected_items="issue_type" item-label="Issue Type" />
+                    <t-date-picker t-layer="filter_calendar_last_ignored" t-filter:start_date="last_ignored_start" t-filter:end_date="last_ignored_end" t-filter:date_preset="last_ignored_range_preset" date-format="YYYY-MM-DD" item-label="Last Ignored Date" />
                     <t-date-picker t-layer="filter_calendar_last_introduced" t-filter:start_date="last_introduced_start" t-filter:end_date="last_introduced_end" t-filter:date_preset="last_introduced_range_preset" date-format="YYYY-MM-DD" item-label="Last Introduced Date" />
                     <t-date-picker t-layer="filter_calendar_last_disappeared" t-filter:start_date="last_disappeared_start" t-filter:end_date="last_disappeared_end" t-filter:date_preset="last_disappeared_range_preset" date-format="YYYY-MM-DD" item-label="Last Resolved Date" />
+                    <t-multi-selector is-expanded t-layer="filter_package_name" t-filter:selected_items="package_name" item-label="Package Name" is-searchable />
+                    <t-multi-selector is-expanded t-layer="filter_package_version" t-filter:selected_items="package_version" item-label="Package Version" is-searchable />
                     <t-range-input t-layer="filter_priority_score" t-filter:min="min" t-filter:max="max" t-min-column="MIN" t-max-column="MAX" item-label="Priority Score" />
-                    <t-tags-input is-single-tag t-layer='filter_project_criticality' item-label="Project Criticality" t-filter:selected_items="criticality" :is-label-capitalized="true" /> 
+                    <t-tags-input is-single-tag t-layer='filter_project_criticality' item-label="Project Criticality" t-filter:selected_items="criticality" :is-label-capitalized="true" />
                     <t-tags-input is-single-tag t-layer='filter_project_environment' item-label="Project Environment" t-filter:selected_items="environment" :is-label-capitalized="true" /> 
                     <t-tags-input is-single-tag t-layer='filter_project_lifecycle' item-label="Project Lifecycle" t-filter:selected_items="lifecycle" :is-label-capitalized="true" /> 
+                    <t-multi-selector is-expanded t-layer="filter_problem_id" t-filter:selected_items="problem_id" item-label="Problem Id" is-searchable />
                     <t-multi-selector is-expanded t-layer="filter_project_name" t-filter:selected_items="project_name" item-label="Project Name" is-searchable />
+                    <t-multi-selector is-expanded t-layer="filter_project_origin" t-filter:selected_items="project_origin" item-label="Project Origin" />
+                    <t-multi-selector is-expanded t-layer="filter_project_owner" t-filter:selected_items="project_owner" item-label="Project Owner" is-searchable />
                     <t-tags-input t-layer='filter_tags' item-label="Project Tags" t-filter:selected_items="tags" :is-label-capitalized="true" />
                     <t-multi-selector is-expanded t-layer="filter_project_type" t-filter:selected_items="project_type" item-label="Project Type" />
-                    <t-multi-selector is-expanded t-layer="filter_reachability" t-filter:selected_items="reachability" item-label="Reachability" />
                 </t-filter-group>
             </t-container>
 		    <!-- Filters Left End -->
@@ -121,15 +126,16 @@
             </t-container>
         </div>
 
-        <!-- sort="sql" -->
         <TTable 
             title="Issue details" 
-            t-layer="issue_table" 
+            t-layer="table_issues_detail" 
             full_width 
             :can-search="false" 
             :is-header-fixed="true"
             :canPageServer="true"
-            :layerColumnsToHide="['ISSUE_TYPE','PROBLEM_ID','PROJECT_URL','ISSUE_URL','ISSUE_STATUS_INDICATOR']"
+            sort="sql"
+            :excludeFromSort="['ISSUE_SEVERITY']"
+            :layerColumnsToHide="['ISSUE_TYPE','PROJECT_URL','ISSUE_URL','ISSUE_STATUS_INDICATOR','VULN_DB_URL','ORIGINAL_ISSUE_TYPE']"
             :modifiableColumns="[
                     {
                         displayColumn: 'SCORE',
@@ -167,8 +173,18 @@
                         displayByDefault: true,
                     },
                     {
+                        displayColumn: 'SNYK PRODUCT',
+                        layerColumns: ['PRODUCT_NAME'],
+                        displayByDefault: true,
+                    },
+                    {
                         displayColumn: 'ISSUE STATUS',
-                        layerColumns: ['ISSUE_STATE'],
+                        layerColumns: ['ISSUE_STATUS'],
+                        displayByDefault: false,
+                    },
+                    {
+                        displayColumn: 'LAST IGNORED',
+                        layerColumns: ['LAST_IGNORED'],
                         displayByDefault: false,
                     },
                     {
@@ -178,32 +194,57 @@
                     },
                     {
                         displayColumn: 'LAST RESOLVED',
-                        layerColumns: ['LAST_DISAPPEARED'],
+                        layerColumns: ['LAST_RESOLVED'],
                         displayByDefault: false,
                     },
                     {
-                        displayColumn: 'PRODUCT',
-                        layerColumns: ['PRODUCT_NAME'],
-                        displayByDefault: true,
+                        displayColumn: 'ORG NAME',
+                        layerColumns: ['ORG_NAME'],
+                        displayByDefault: false,
+                    },
+                    {
+                        displayColumn: 'PACKAGE NAME',
+                        layerColumns: ['PACKAGE_NAME'],
+                        displayByDefault: false,
+                    },
+                    {
+                        displayColumn: 'PACKAGE VERSION',
+                        layerColumns: ['PACKAGE_VERSION'],
+                        displayByDefault: false,
+                    },
+                    {
+                        displayColumn: 'PROBLEM ID',
+                        layerColumns: ['PROBLEM_ID'],
+                        displayByDefault: false,
                     },
                     {
                         displayColumn: 'PROJECT CRITICALITY',
-                        layerColumns: ['CRITICALITY_DISPLAY'],
+                        layerColumns: ['PROJECT_CRITICALITY'],
                         displayByDefault: false,
                     },
                     {
                         displayColumn: 'PROJECT ENVIRONMENT',
-                        layerColumns: ['ENVIRONMENT_DISPLAY'],
+                        layerColumns: ['PROJECT_ENVIRONMENT'],
                         displayByDefault: false,
                     },
                     {
                         displayColumn: 'PROJECT LIFECYCLE',
-                        layerColumns: ['LIFECYCLE_DISPLAY'],
+                        layerColumns: ['PROJECT_LIFECYCLE'],
+                        displayByDefault: false,
+                    },
+                    {
+                        displayColumn: 'PROJECT ORIGIN',
+                        layerColumns: ['PROJECT_ORIGIN'],
+                        displayByDefault: false,
+                    },
+                    {
+                        displayColumn: 'PROJECT OWNER',
+                        layerColumns: ['PROJECT_OWNER'],
                         displayByDefault: false,
                     },
                     {
                         displayColumn: 'PROJECT TAGS',
-                        layerColumns: ['KEY_VALUE_DISPLAY'],
+                        layerColumns: ['PROJECT_TAGS'],
                         displayByDefault: false,
                     },
                     {
@@ -211,17 +252,16 @@
                         layerColumns: ['PROJECT_TYPE'],
                         displayByDefault: false,
                     },
-                    {
-                        displayColumn: 'REACHABILITY',
-                        layerColumns: ['REACHABILITY'],
-                        displayByDefault: false,
-                    },
+                     
+                    
+                    
+                    
                 ]">
             <t-column header=" " id-or-name="ISSUE_SEVERITY">
                 <IssueSeverityIcon :severity="value" />
             </t-column>
             <t-column header="SCORE" id-or-name="PRIORITY_SCORE">
-                {{ parseInt(rendered_value, 10) }}
+                {{ parseInt(value, 10) }}
             </t-column>
             <t-column header="ISSUE" id-or-name="PROBLEM_TITLE">
                 <div class="text-[#145DEB] text-sm font-medium leading-[15px] tracking-[0.1px]">{{row.ISSUE_TYPE.value}}</div>
@@ -269,16 +309,24 @@
             <t-column header="LAST INTRODUCED" id-or-name="LAST_INTRODUCED">
                   <date-formatter :date="value" /> 
             </t-column> 
-            <t-column header="LAST RESOLVED" id-or-name="LAST_DISAPPEARED">
+            <t-column header="LAST RESOLVED" id-or-name="LAST_RESOLVED">
                 <date-formatter :date="value" />
             </t-column>
-            <t-column header="PROJECT CRITICALITY" id-or-name="CRITICALITY_DISPLAY" />
-            <t-column header="PROJECT ENVIRONMENT" id-or-name="ENVIRONMENT_DISPLAY" />
-            <t-column header="PROJECT LIFECYCLE" id-or-name="LIFECYCLE_DISPLAY" />
-            <t-column header="PROJECT TAGS" id-or-name="KEY_VALUE_DISPLAY" />
-            <t-column header="PRODUCT" id-or-name="PRODUCT_NAME" />
+            <t-column header="PROJECT CRITICALITY" id-or-name="PROJECT_CRITICALITY" />
+            <t-column header="PROJECT ENVIRONMENT" id-or-name="PROJECT_ENVIRONMENT" />
+            <t-column header="PROJECT LIFECYCLE" id-or-name="PROJECT_LIFECYCLE" />
+            <t-column header="PROJECT TAGS" id-or-name="PROJECT_TAGS" />
+            <t-column header="SNYK PRODUCT" id-or-name="PRODUCT_NAME" />
             <t-column header="PROJECT TYPE" id-or-name="PROJECT_TYPE" />
-            <t-column header="ISSUE STATUS" id-or-name="ISSUE_STATE" />
+            <t-column header="ISSUE STATUS" id-or-name="ISSUE_STATUS" />
+            <t-column header="PROBLEM ID" id-or-name="PROBLEM_ID" />
+            <t-column header="ORG NAME" id-or-name="ORG_NAME" />
+            <t-column header="LAST IGNORED" id-or-name="LAST_IGNORED" />
+            <t-column header="PROJECT OWNER" id-or-name="PROJECT_OWNER" />
+            <t-column header="PROJECT ORIGIN" id-or-name="PROJECT_ORIGIN" />
+            <t-column header="PACKAGE NAME" id-or-name="PACKAGE_NAME" />
+            <t-column header="PACKAGE VERSION" id-or-name="PACKAGE_VERSION" />
+
         </TTable>
 	  <!-- Layers End -->
 
