@@ -1,7 +1,7 @@
 
 SELECT
 project_name,
-project_id,
+project_public_id,
 
   count( case when 
     (to_date(last_disappeared) <= '{{ filter('issue_summary_end') }}'

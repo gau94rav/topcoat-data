@@ -15,7 +15,7 @@
             </div>
             <div class="text-[#1C1C21] text-[26px] font-semibold leading-[39px]">
                 <div v-for="(nav, index) in project.nav" :key="index">
-                    <span v-if="nav.pdf_template && nav.pdf_template === 'executive_pdf_template'">
+                    <span v-if="nav.pdf_template && nav.pdf_template === 'issues_summary_pdf_template'">
                         {{ nav.title }}
                     </span>
                 </div>
@@ -183,7 +183,7 @@
                 v-if="filters.project_name"
                 t-layer="filter_project_name"
                 t-value-column="PROJECT_NAME"
-                t-key-column="PROJECT_ID"
+                t-key-column="PROJECT_PUBLIC_ID"
                 :values="filters.project_name"
                 label="Project Name"
                 is-list
@@ -271,7 +271,8 @@
             :can-search="false"
             :is-header-fixed="true"
             :canPageServer="true" 
-            :layerColumnsToHide="['ORG_DISPLAY_NAME', 'PROJECT_ID', 'OPEN_PREVIOUS','NEW_PREVIOUS','RESOLVED_PREVIOUS','MTR_PREVIOUS','ORG_NAME']"
+            :rows-per-page="50"
+            :layerColumnsToHide="['ORG_DISPLAY_NAME', 'project_public_id', 'OPEN_PREVIOUS','NEW_PREVIOUS','RESOLVED_PREVIOUS','MTR_PREVIOUS','ORG_NAME']"
             style="color: black; padding-top: 10px"
         >
         <t-column header="PROJECT NAME" id-or-name="PROJECT_NAME">
@@ -282,7 +283,7 @@
         </t-column>
         <t-column header="NEW ISSUES" id-or-name="NEW_CURRENT">
             <TURL :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
-                :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_ID.value, 'last_introduced_start': filters?.issue_summary_start, 'last_introduced_end': filters?.issue_summary_end, 'issue_status': 'Open%257CResolved' }" 
+                :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_PUBLIC_ID.value, 'last_introduced_start': filters?.issue_summary_start, 'last_introduced_end': filters?.issue_summary_end, 'issue_status': 'Open%257CResolved' }" 
                 :includeUrlStyle="false"
                 :includeContextParam="true"
                 t-layer="selected_org">
@@ -291,7 +292,7 @@
         </t-column>
         <t-column header="RESOLVED ISSUES" id-or-name="RESOLVED_CURRENT">
             <TURL :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
-                :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_ID.value,'last_disappeared_start': filters?.issue_summary_start, 'last_disappeared_end': filters?.issue_summary_end, 'issue_status': 'Open%257CResolved' }" 
+                :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_PUBLIC_ID.value,'last_disappeared_start': filters?.issue_summary_start, 'last_disappeared_end': filters?.issue_summary_end, 'issue_status': 'Open%257CResolved' }" 
                 :includeUrlStyle="false"
                 :includeContextParam="true"
                 t-layer="selected_org">
@@ -301,6 +302,12 @@
         <t-column header="MEAN TIME TO RESOLVE" id-or-name="MTR_CURRENT">
             <CurrentAndPast :current="value" :past="row?.MTR_PREVIOUS?.value" unit="d" zeroDisplay="" />
         </t-column>
+
+            <template v-slot:footer="{ totalCount, visibleCount }">
+                <div class="px-2 text-lg text-right w-full" v-if="totalCount > visibleCount">
+                    {{ 'Showing only ' + visibleCount + ' of ' + totalCount + ' results' }}
+                </div>
+            </template>
         </t-table>
 
         <t-table
@@ -311,6 +318,7 @@
             :can-search="false"
             :is-header-fixed="true"
             :canPageServer="true"
+            :rows-per-page="50"
             :layerColumnsToHide="['ORG_PUBLIC_ID', 'OPEN_PREVIOUS','NEW_PREVIOUS','RESOLVED_PREVIOUS','MTR_PREVIOUS','ORG_NAME']"
             style="color: black; padding-top: 10px"
         >
@@ -337,6 +345,12 @@
             <t-column header="MEAN TIME TO RESOLVE" id-or-name="MTR_CURRENT">
                 <CurrentAndPast :current="value" :past="row?.MTR_PREVIOUS?.value" unit="d" zeroDisplay="" />
             </t-column>
+
+            <template v-slot:footer="{ totalCount, visibleCount }">
+              <div class="px-2 text-lg text-right w-full" v-if="totalCount > visibleCount">
+                {{ 'Showing only ' + visibleCount + ' of ' + totalCount + ' results' }}
+              </div>
+            </template>
         </t-table>
     <!-- Table -->
 

@@ -15,7 +15,7 @@
             </div>
             <div class="text-[#1C1C21] text-[26px] font-semibold leading-[39px]">
                 <div v-for="(nav, index) in project.nav" :key="index">
-                    <span v-if="nav.pdf_template && nav.pdf_template === 'issues_pdf_template'">
+                    <span v-if="nav.pdf_template && nav.pdf_template === 'issues_detail_pdf_template'">
                         {{ nav.title }}
                     </span>
                 </div>
@@ -273,7 +273,7 @@
                     v-if="filters.project_name"
                     t-layer="filter_project_name"
                     t-value-column="PROJECT_NAME"
-                    t-key-column="PROJECT_ID"
+                    t-key-column="PROJECT_PUBLIC_ID"
                     :values="filters.project_name"
                     label="Project Name"
                     is-list
@@ -341,8 +341,9 @@
             full_width 
             :can-search="false" 
             :is-header-fixed="true"
+            :rows-per-page="50"
             :canPageServer="true"
-            :layerColumnsToHide="['ISSUE_TYPE','PROBLEM_ID','PROJECT_URL','ISSUE_URL','ISSUE_STATUS_INDICATOR']"
+            :layerColumnsToHide="['ISSUE_TYPE','PROBLEM_ID','PROJECT_URL','ISSUE_URL','ISSUE_STATUS_INDICATOR','VULN_DB_URL','INITIAL_ISSUE_TYPE']"
             :modifiableColumns="[
                     {
                         displayColumn: 'SCORE',
@@ -536,7 +537,14 @@
             <t-column header="SNYK PRODUCT" id-or-name="PRODUCT_NAME" />
             <t-column header="PROJECT TYPE" id-or-name="PROJECT_TYPE" />
             <t-column header="ISSUE STATUS" id-or-name="ISSUE_STATUS" />
-            <t-column header="PROBLEM ID" id-or-name="PROBLEM_ID" />
+            <t-column header="PROBLEM ID" id-or-name="PROBLEM_ID" >
+                <span v-if="row.INITIAL_ISSUE_TYPE.value == 'PACKAGE_VULNERABILITY'">
+    				      <TUrl :url="row.VULN_DB_URL.value" :includeFilterParams="false" target="_blank"> {{rendered_value}} </TUrl>
+				        </span> 
+				<span v-else>
+					{{rendered_value}}
+				</span>
+            </t-column>
             <t-column header="ORG NAME" id-or-name="ORG_NAME" />
             <t-column header="IS ISSUE REINTRODUCED" id-or-name="IS_ISSUE_REINTRODUCED" />
             <t-column header="LAST IGNORED" id-or-name="LAST_IGNORED" />
@@ -546,7 +554,13 @@
             <t-column header="PACKAGE NAME" id-or-name="PACKAGE_NAME" />
             <t-column header="PACKAGE VERSION" id-or-name="PACKAGE_VERSION" />
 
+            <template v-slot:footer="{ totalCount, visibleCount }">
+              <div class="px-2 text-lg text-right w-full" v-if="totalCount > visibleCount">
+                {{ 'Showing only ' + visibleCount + ' of ' + totalCount + ' results' }}
+              </div>
+            </template>
         </TTable>
+
         <!-- Table -->
 
     </t-pdf-template>

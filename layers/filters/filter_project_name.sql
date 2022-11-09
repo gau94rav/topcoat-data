@@ -1,17 +1,20 @@
 
 
-select project_id, project_name
+select distinct f.project_id, f.project_name, p.project_public_id
 
 
-from "REPORTING"."MIGRATED_MARTS"."DIM_PROJECT_NAME"
-where {{ authorized_orgs('org_public_id', 'group_public_id') }}
+from "REPORTING"."MIGRATED_MARTS"."DIM_PROJECT_NAME" f
+left join "REPORTING"."MIGRATED_MARTS"."PROJECTS" p
+on f.project_id = p.project_id
+where {{ authorized_orgs('f.org_public_id', 'f.group_public_id') }}
 {% if filter('orgs') %}
-and org_public_id in ({{ filter('orgs') | to_sql_list}})
+and f.org_public_id in ({{ filter('orgs') | to_sql_list}})
 {% endif %}
 {% if filter('groups') %}
-and group_public_id in ({{ filter('groups')| to_sql_list}})
+and f.group_public_id in ({{ filter('groups')| to_sql_list}})
 {% endif %}
-and is_monitored = true
+and f.is_monitored = true
+and project_deleted is null
 
 order by 2
 
@@ -23,6 +26,6 @@ order by 2
 )}} 
 
 {{ column(
- name='PROJECT_ID',
+ name='PROJECT_PUBLIC_ID',
  tags=['ids']
 )}} 

@@ -79,13 +79,17 @@
 			</div>
 			<t-container gap-x="2" class="w-full md:col-span-2">
 				<span  class="base-heading text-xl font-normal text-[#211F47] leading-6">Vulnerabilities By</span>
-				<t-select t-layer="vuln_issues_by" t-filter:dropdown="vulnerabilities_by" label="Vulnerabilities By" item-label="vulnerabilities_by" default-value="Issue Type" />
+				<t-select t-layer="vuln_issues_by" t-filter:dropdown="vulnerabilities_by" label="" default-value="Issue Type" />
 			</t-container>	
 		</div>
         <!-- 20220923 ToDo: point to correct layers for big numbers  -->
         <div class="grid md:grid-cols-3 gap-1" slot="mid">
             <t-vis-grouper t-layer="big_num_issue_totals" t-class="grid grid-cols-2 gap-1 w-full">
-                <t-big-number label="UNIQUE VULNS" big-number-size="big" t-value-column="TOTAL_UNIQUE" height="108" :number-format-limit="9999"/>
+                <t-big-number label="UNIQUE VULNS" big-number-size="big" t-value-column="TOTAL_UNIQUE" height="108" :number-format-limit="9999" >
+                  <div slot="tooltip" class="text-sm leading-[18px] font-normal break-normal">
+                    Unique vulnerabilities are grouped by the Snyk Problem ID. See the Snyk Vulnerability DB for more information.
+                  </div>
+                </t-big-number>
                 <t-big-number label="TOTAL ISSUES" big-number-size="big" t-value-column="TOTAL" height="108" :number-format-limit="9999"/>
             </t-vis-grouper>
             <t-container class="md:col-span-2">
@@ -115,7 +119,7 @@
 
         <!-- START ISSUES TABLES -->
         <TTable 
-            title="Vulnerability details"
+            title="Vulnerability Details"
             t-layer="table_vuln_detail" 
             :can-search="false" 
             :is-header-fixed="true" 
@@ -123,7 +127,7 @@
             :excludeFromSort="['ISSUE_SEVERITY']"
             canCollapseDetailRows
             canPageServer
-            :layerColumnsToHide="[ 'ISSUE_TYPE', 'AUTOFIXABLE', 'PROJECT_TYPE','INITIAL_ISSUE_TYPE','VULN_DB_URL','PROBLEM_ID']"
+            :layerColumnsToHide="[ 'ISSUE_TYPE', 'AUTOFIXABLE', 'PROJECT_TYPE','INITIAL_ISSUE_TYPE','VULN_DB_URL','PROBLEM_ID','EXPLOIT_MATURITY','ORG_NAME']"
         >
             <template v-slot:detail_row_slot="row">
                 <TTable 
@@ -132,7 +136,7 @@
                     :can-search="false" 
                     canPageServer
                     :filters="{ 'issue_id': row.PROBLEM_ID.value }"
-                    :layerColumnsToHide="['PROJECT_ID', 'ORG_PUBLIC_ID', 'PROJECT_TYPE','PROJECT_URL', 'GROUP_PUBLIC_ID', 'PROBLEM_ID','ISSUE_URL']"
+                    :layerColumnsToHide="['PROJECT_PUBLIC_ID','PROJECT_ID', 'ORG_PUBLIC_ID', 'PROJECT_TYPE','PROJECT_URL', 'GROUP_PUBLIC_ID', 'PROBLEM_ID','ISSUE_URL']"
                     :is-header-fixed="true" 
                     :rowsPerPage="10"
                 >
@@ -150,7 +154,7 @@
                         <span class="text-sm font-medium leading-[15px] tracking-[0.1px]">
                     <TUrl :url="row.ISSUE_URL.value" :includeFilterParams="false"  target="_blank"> {{rendered_value}} </TUrl>
                     </span>
-                    <div class="text-[#145DEB] text-sm font-small leading-[15px] tracking-[0.1px]">{{row.PROBLEM_ID.value}}</div>
+                    
                     </t-column>
                     <t-column header="AUTO FIXABLE" id-or-name="AUTOFIXABLE">
                         <span v-if="value !== 'No' && value !== null" class="flex text-sm text-normal text-[#727184] leading-[17px]">
@@ -183,8 +187,9 @@
 				<span v-else>
 					{{rendered_value}}
 				</span>
-                
+            <div class="text-[#145DEB] text-xs font-small leading-[15px] tracking-[0.1px]">{{row.PROBLEM_ID.value}}</div>
             </t-column> 
+        
             <t-column header="CVE" id-or-name="CVE">
                 <div class="text-[#145DEB] text-sm font-normal">
                     <span v-for=="CVE in JSON.parse(value)">
@@ -200,11 +205,11 @@
                     </span>
                 </div>
             </t-column>
-            <t-column header="EXPLOIT MATURITY" id-or-name="EXPLOIT_MATURITY">
+            <!-- <t-column header="EXPLOIT MATURITY" id-or-name="EXPLOIT_MATURITY">
                 <span v-if="rendered_value">
                     {{ rendered_value.split('-').map((w) => _.capitalize(w)).join(' ') }}
                 </span>
-            </t-column>
+            </t-column> -->
             <t-column header="SNYK PRODUCT" id-or-name="PRODUCT_NAME" />
             <t-column header="PROJECTS" id-or-name="PROJECT_COUNT">
                 <span>
@@ -212,15 +217,30 @@
                 </span>
             </t-column>
             <t-column header="ISSUE COUNT" id-or-name="ISSUE_COUNT">
+              <span v-if="whoami && whoami.custom_attributes?.snyk_user_reports_group_ids?.length == 1">
                 <TURL 
-                  :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'" 
+                  :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'"
                   :additionalUrlParams="{'context[page]': 'issues-detail', 'problem_id': row.PROBLEM_ID.value }" 
                   :includeUrlStyle="false"
                 >
                   <span class="text-[#145DEB]">
                     {{ rendered_value }}
                   </span>
-                </TURL>
+                    </TURL>
+                </span>
+
+                 <span v-else>
+                <TURL 
+                  :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
+                  :additionalUrlParams="{'context[page]': 'issues-detail', 'problem_id': row.PROBLEM_ID.value }" 
+                  :includeUrlStyle="false"
+                >
+                  <span class="text-[#145DEB]">
+                    {{ rendered_value }}
+                  </span>
+                   </TURL>
+                </span>
+              
             </t-column>
         </TTable>
     </report>

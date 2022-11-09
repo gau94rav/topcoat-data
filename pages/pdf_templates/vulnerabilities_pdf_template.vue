@@ -251,7 +251,7 @@
                     v-if="filters.project_name"
                     t-layer="filter_project_name"
                     t-value-column="PROJECT_NAME"
-                    t-key-column="PROJECT_ID"
+                    t-key-column="PROJECT_PUBLIC_ID"
                     :values="filters.project_name"
                     label="Project Name"
                     is-list
@@ -320,7 +320,8 @@
             :can-search="false" 
             :is-header-fixed="true" 
             :canPageServer="true"
-            :layerColumnsToHide="['ISSUE_TYPE', 'AUTOFIXABLE', 'PROJECT_TYPE','INITIAL_ISSUE_TYPE','VULN_DB_URL','PROBLEM_ID']"
+            :rows-per-page="50"
+            :layerColumnsToHide="['ISSUE_TYPE', 'AUTOFIXABLE', 'PROJECT_TYPE','INITIAL_ISSUE_TYPE','VULN_DB_URL','PROBLEM_ID','EXPLOIT_MATURITY','ORG_NAME']"
         >
            <t-column header=" " id-or-name="ISSUE_SEVERITY">
                 <IssueSeverityIcon :severity="value" />
@@ -336,7 +337,7 @@
 				<span v-else>
 					{{rendered_value}}
 				</span>
-                
+            <div class="text-[#145DEB] text-xs font-small leading-[15px] tracking-[0.1px]">{{row.PROBLEM_ID.value}}</div>
             </t-column> 
             <t-column header="CVE" id-or-name="CVE">
                 <div class="text-[#145DEB] text-sm font-normal">
@@ -353,11 +354,7 @@
                     </span>
                 </div>
             </t-column>
-            <t-column header="EXPLOIT MATURITY" id-or-name="EXPLOIT_MATURITY">
-                <span v-if="rendered_value">
-                    {{ rendered_value.split('-').map((w) => _.capitalize(w)).join(' ') }}
-                </span>
-            </t-column>
+            
             <t-column header="SNYK PRODUCT" id-or-name="PRODUCT_NAME" />
             <t-column header="PROJECTS" id-or-name="PROJECT_COUNT">
                 <span>
@@ -365,16 +362,35 @@
                 </span>
             </t-column>
             <t-column header="ISSUE COUNT" id-or-name="ISSUE_COUNT">
+                <span v-if="whoami && whoami.custom_attributes?.snyk_user_reports_group_ids?.length == 1">
                 <TURL 
-                  :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'" 
-                  :additionalUrlParams="{'context[page]': 'issues-detail', 'problem_id': filters?.problem_id }" 
+                  :url="'https://app.snyk.io/group/'+whoami.custom_attributes.snyk_user_reports_group_ids[0]+'/reporting'"
+                  :additionalUrlParams="{'context[page]': 'issues-detail', 'problem_id': row.PROBLEM_ID.value }" 
                   :includeUrlStyle="false"
                 >
                   <span class="text-[#145DEB]">
                     {{ rendered_value }}
                   </span>
-                </TURL>
+                    </TURL>
+                </span>
+
+                 <span v-else>
+                <TURL 
+                  :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
+                  :additionalUrlParams="{'context[page]': 'issues-detail', 'problem_id': row.PROBLEM_ID.value }" 
+                  :includeUrlStyle="false"
+                >
+                  <span class="text-[#145DEB]">
+                    {{ rendered_value }}
+                  </span>
+                   </TURL>
+                </span>
             </t-column>
+            <template v-slot:footer="{ totalCount, visibleCount }">
+              <div class="px-2 text-lg text-right w-full" v-if="totalCount > visibleCount">
+                {{ 'Showing only ' + visibleCount + ' of ' + totalCount + ' results' }}
+              </div>
+            </template>
         </TTable>
         <!-- Table -->
 

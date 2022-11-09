@@ -74,7 +74,7 @@ and (priority_score between '{{ filter('min') }}' and '{{ filter('max') }}')
 {% endif %}
 
 {% if filter('project_name') %}
-and project_id in ({{ filter('project_name')| to_sql_list}})
+and project_public_id in ({{ filter('project_name')| to_sql_list}})
 {% endif %}
 
 {% if filter('criticality') is iterable %}

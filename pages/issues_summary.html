@@ -181,7 +181,7 @@
       :can-search="false"
       :is-header-fixed="true"
       :canPageServer="true"
-      :layerColumnsToHide="['ORG_DISPLAY_NAME', 'PROJECT_ID', 'OPEN_PREVIOUS','NEW_PREVIOUS','RESOLVED_PREVIOUS','MTR_PREVIOUS', 'ORG_NAME', 'PROJECT_URL']"
+      :layerColumnsToHide="['ORG_DISPLAY_NAME', 'PROJECT_PUBLIC_ID', 'OPEN_PREVIOUS','NEW_PREVIOUS','RESOLVED_PREVIOUS','MTR_PREVIOUS', 'ORG_NAME', 'PROJECT_URL']"
       style="color: black; padding-top: 10px"
       tooltip="This shows the breakdown of key metrics above per Organization if viewed at the Group-level or per Project if viewed at the Organization-level."
       sort="sql"
@@ -195,7 +195,7 @@
       </t-column>
       <t-column header="NEW ISSUES" id-or-name="NEW_CURRENT">
 		<TURL :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
-            :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_ID.value, 'last_introduced_start': filters?.issue_summary_start, 'last_introduced_end': filters?.issue_summary_end, 'last_introduced_range_preset': filters?.range_preset, 'issue_status': 'Open%7CResolved' }"
+            :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_PUBLIC_ID.value, 'last_introduced_start': filters?.issue_summary_start, 'last_introduced_end': filters?.issue_summary_end, 'last_introduced_range_preset': filters?.range_preset, 'issue_status': 'Open%7CResolved' }"
             :includeUrlStyle="false"
             :includeContextParam="true"
              t-layer="selected_org">
@@ -204,7 +204,7 @@
       </t-column>
       <t-column header="RESOLVED ISSUES" id-or-name="RESOLVED_CURRENT">
         <TURL :url="'https://app.snyk.io/org/'+row?.ORG_NAME?.value.replace(' - ', '-').replace(' ', '-').toLowerCase()+'/reporting'"
-            :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_ID.value,'last_disappeared_start': filters?.issue_summary_start, 'last_disappeared_end': filters?.issue_summary_end, 'last_disappeared_range_preset': filters?.range_preset, 'issue_status': 'Open%7CResolved' }" 
+            :additionalUrlParams="{'context[page]': 'issues-detail', 'project_name': row.PROJECT_PUBLIC_ID.value,'last_disappeared_start': filters?.issue_summary_start, 'last_disappeared_end': filters?.issue_summary_end, 'last_disappeared_range_preset': filters?.range_preset, 'issue_status': 'Resolved' }" 
             :includeUrlStyle="false"
             :includeContextParam="true"
              t-layer="selected_org">

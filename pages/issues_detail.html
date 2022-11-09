@@ -74,7 +74,7 @@
 			</div>
 			<t-container gap-x="2" class="w-full md:col-span-2">
 				<span  class="base-heading text-xl font-normal text-[#211F47] leading-6">Issues by</span>
-				<t-select t-layer="filter_layer_type" t-filter:dropdown="issue_by" label="Issues By" item-label="Issues_by" default-value="Severity" />
+				<t-select t-layer="filter_layer_type" t-filter:dropdown="issue_by" label="" default-value="Severity" />
 			</t-container>	
 		</div>
         <div class="grid md:grid-cols-3 gap-1" slot="mid">
@@ -135,7 +135,7 @@
             :canPageServer="true"
             sort="sql"
             :excludeFromSort="['ISSUE_SEVERITY']"
-            :layerColumnsToHide="['ISSUE_TYPE','PROJECT_URL','ISSUE_URL','ISSUE_STATUS_INDICATOR','VULN_DB_URL','ORIGINAL_ISSUE_TYPE']"
+            :layerColumnsToHide="['ISSUE_TYPE','PROJECT_URL','ISSUE_URL','ISSUE_STATUS_INDICATOR','VULN_DB_URL','INITIAL_ISSUE_TYPE']"
             :modifiableColumns="[
                     {
                         displayColumn: 'SCORE',
@@ -319,7 +319,14 @@
             <t-column header="SNYK PRODUCT" id-or-name="PRODUCT_NAME" />
             <t-column header="PROJECT TYPE" id-or-name="PROJECT_TYPE" />
             <t-column header="ISSUE STATUS" id-or-name="ISSUE_STATUS" />
-            <t-column header="PROBLEM ID" id-or-name="PROBLEM_ID" />
+            <t-column header="PROBLEM ID" id-or-name="PROBLEM_ID" >
+                <span v-if="row.INITIAL_ISSUE_TYPE.value == 'PACKAGE_VULNERABILITY'">
+    				      <TUrl :url="row.VULN_DB_URL.value" :includeFilterParams="false" target="_blank"> {{rendered_value}} </TUrl>
+				        </span> 
+				<span v-else>
+					{{rendered_value}}
+				</span>
+            </t-column>
             <t-column header="ORG NAME" id-or-name="ORG_NAME" />
             <t-column header="LAST IGNORED" id-or-name="LAST_IGNORED" />
             <t-column header="PROJECT OWNER" id-or-name="PROJECT_OWNER" />

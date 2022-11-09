@@ -1,6 +1,6 @@
 select
 project_name,
-project_id,
+project_public_id,
 count(case when 
     (date_trunc('DAY',last_INTRODUCED) <= '{{ filter('issue_summary_end') }}'
   and date_trunc('DAY',last_INTRODUCED) >= '{{ filter('issue_summary_start') }}') 

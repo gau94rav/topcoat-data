@@ -31,7 +31,7 @@ VULN_DB_URL,
 PROJECT_URL,
 ISSUE_STATE AS ISSUE_STATUS_INDICATOR, -- CAN BE REMOVED IF WE UPDATE DBT TO ONLY POPULATE THE ISSUE_URL IF PRESENT & CHANGE THE TURL DEPENDENCY
 ISSUE_TYPE,
-RAW_ISSUE_TYPE as ORIGINAL_ISSUE_TYPE
+RAW_ISSUE_TYPE as INITIAL_ISSUE_TYPE
 
 from "REPORTING"."MIGRATED_MARTS"."ISSUES"
 
@@ -69,7 +69,7 @@ and problem_id in ({{ filter('problem_id')| to_sql_list}})
 {% endif %}
 
 {% if filter('project_name') %}
-and project_id in ({{ filter('project_name')| to_sql_list}})
+and project_public_id in ({{ filter('project_name')| to_sql_list}})
 {% endif %}
 
 {% if filter('issue_status') %}

@@ -1,6 +1,6 @@
  select 
 project_name,
-project_id,
+project_public_id,
     count(
     case when to_date(last_introduced) <= '{{ filter('issue_summary_end') }}'
     then grouped_by_key else null end) as all_c,

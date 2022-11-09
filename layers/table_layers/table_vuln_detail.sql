@@ -37,7 +37,7 @@ and problem_id in ({{ filter('problem_id')| to_sql_list}})
 
 
 {% if filter('project_name') %}
-and project_id in ({{ filter('project_name')| to_sql_list}})
+and project_public_id in ({{ filter('project_name')| to_sql_list}})
 {% endif %}
 
 {% if filter('issue_status') %}
@@ -171,24 +171,26 @@ and problem_id in ({{ filter('problem_id')| to_sql_list}})
       )
 
 select
-problem_id as problem_id,
+
 min(problem_title) as problem_title,
+problem_id as problem_id,
 max(issue_severity) as issue_severity,
 max(priority_score) as priority_score, 
 MIN(issue_type) as issue_type,
 min(to_variant(cve)) as cve,
 min(to_variant(cwe)) as cwe,
-max(exploit_maturity) as exploit_maturity,
+--max(exploit_maturity) as exploit_maturity,
 min(product_name) as product_name,
-count(distinct project_id) as project_count,
+count(distinct project_public_id) as project_count,
 count(distinct issue_id) as issue_count,
 min(raw_issue_type) as initial_issue_type,
-min(VULN_DB_URL) as vuln_db_url
+min(VULN_DB_URL) as vuln_db_url,
+min(org_name) as org_name
 
 
 from issues
 
-group by 1
+group by 2
 
 {% if filter('orderBy') %}
       order by  {{  filter('orderBy') }}

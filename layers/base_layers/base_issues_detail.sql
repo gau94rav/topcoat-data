@@ -93,7 +93,7 @@ and problem_id in ({{ filter('problem_id')| to_sql_list}})
 
 
 {% if filter('project_name') %}
-and project_id in ({{ filter('project_name')| to_sql_list}})
+and project_public_id in ({{ filter('project_name')| to_sql_list}})
 {% endif %}
 
 {% if filter('issue_status') %}
